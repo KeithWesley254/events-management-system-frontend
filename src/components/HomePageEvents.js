@@ -1,19 +1,18 @@
 import { Card, CardContent, CardMedia } from '@mui/material';
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HomePageEvents = ({events}) => {
     const filteredDates = events.filter((event)=> 
      (parseInt(event.time_diff) > 0)
     )
+    const navigate = useNavigate();
 
   return (
         <div style={{ marginRight: 10, marginLeft: 10, borderRadius: 20, gap: 20, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row' }}>
           {filteredDates.map((event) => {
               return (
                 <div key={event.id}>
-                
-                  <Link style={{textDecoration: "none"}} href={`/specificevent/${event.id}`}>
                       
                         <Card className="homeCard" style={{ 
                           textAlign: "left", 
@@ -23,6 +22,7 @@ const HomePageEvents = ({events}) => {
                           cursor: "pointer",
                           overflowY: "scroll"
                           }}
+                          onClick={() => navigate(`/specific-event/${event.id}`)}
                         >
                             <CardMedia
                                 component="img"
@@ -48,7 +48,6 @@ const HomePageEvents = ({events}) => {
                             </CardContent>
                             
                         </Card>
-                  </Link>
                   &nbsp;
                   
                 </div>

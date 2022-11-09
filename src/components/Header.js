@@ -127,7 +127,7 @@ const Header = ({ logOut }) => {
                   handleCloseNavMenu()
                   navigate('/login')
                   }}>
-                  <Typography sx={{ my: 1, display: 'block', fontSize: 14, fontWeight: "bolder", color: 'black' }} textAlign="center">LogIn</Typography>
+                  <Typography sx={{ my: 1, display: 'block', fontSize: 14, fontWeight: "bolder", color: 'black' }} textAlign="center">Log In</Typography>
                 </MenuItem>
                 
             </Menu>
@@ -208,7 +208,7 @@ const Header = ({ logOut }) => {
                   }}
                 sx={{ my: 2, textTransform: "none", display: 'block', fontSize: 14, fontWeight: "bolder", color: 'black' }}
               >
-                LogIn
+                Log In
               </Button>
             
           </Box>

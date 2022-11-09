@@ -7,6 +7,8 @@ import UserProfile from './pages/UserProfile';
 import AboutUs from './pages/AboutUs';
 import CreateAnEvent from './pages/CreateAnEvent'
 import Header from './components/Header';
+import SpecificCategory from './components/SpecificCategory';
+import SpecificEvent from './components/SpecificEvent';
 
 function App() {
   const [user, setUser] = useState({});
@@ -42,11 +44,13 @@ function App() {
       <Header user={user} logOut={logOut} />
         <main>
           <Routes>
-            <Route exact='true' path='/' element={<Hero />}/>
-            <Route exact='true' path='/login' element={<Login setCurrentUser={setCurrentUser} />}/>
-            <Route path='/user-profiles/:id' element={<UserProfile user={user} setCurrentUser={setCurrentUser} />}/>
-            <Route path='/about-us' element={<AboutUs />}/>
-            <Route path='/create-an-event' element={<CreateAnEvent setCurrentUser={setCurrentUser} />}/>
+            <Route exact='true' path='/' element={<Hero />} />
+            <Route exact='true' path='/login' element={<Login setCurrentUser={setCurrentUser} />} />
+            <Route path='/create-an-event' element={<CreateAnEvent setCurrentUser={setCurrentUser} />} />
+            <Route path='/about-us' element={<AboutUs />} />
+            <Route path='/specific-category/:id' element={<SpecificCategory />} />
+            <Route path='/specific-event/:id' element={<SpecificEvent />} />
+            <Route path='/user-profiles/:id' element={<UserProfile user={user} setCurrentUser={setCurrentUser} />} />
           </Routes>
         </main>
     </div>
