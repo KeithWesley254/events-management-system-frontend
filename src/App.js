@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Hero from './pages/Hero';
@@ -33,8 +34,7 @@ function App() {
       })
         .then((r) => r.json())
         .then((user) => setCurrentUser(user));
-    }('Please log in!');
-  
+    }
   }, []);
 
   return (

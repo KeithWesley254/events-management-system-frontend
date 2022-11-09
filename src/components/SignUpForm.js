@@ -16,7 +16,7 @@ const SignUpForm = ({ setCurrentUser }) => {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -77,7 +77,7 @@ const LoginForm = ({ setCurrentUser }) => {
             <FormControl>
               <button style={{
                 fontSize: 14,
-                backgroundColor: "#4e60ff",
+                backgroundColor: "#d1410a",
                 width: 255,
                 height: 40,
                 color: "#fff",
