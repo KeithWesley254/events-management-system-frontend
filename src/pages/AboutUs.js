@@ -80,7 +80,12 @@ const AboutUs = () => {
                 </Box>
                 <br />  
                 <Box sx={{display: "flex", justifyContent: "center"}}>
-                    <Button onClick={changeAboutImage} variant="contained">See More</Button>
+                  <button
+                  style={{backgroundColor: "#d1410a", cursor: "pointer", width: "50%", margin: 20, color: "#fff", borderRadius: 10, height: 40, border: "none"}}
+                  onClick={changeAboutImage}
+                  >
+                    See More
+                  </button>
                 </Box>
               </div>
             </Box> 
@@ -126,7 +131,12 @@ const AboutUs = () => {
                 </Box>
                 <br />  
                 <Box sx={{display: "flex", justifyContent: "center"}}>
-                    <Button onClick={changeCommunityImage} variant="contained">See More</Button>
+                  <button
+                  style={{backgroundColor: "#d1410a", cursor: "pointer", width: "50%", margin: 20, color: "#fff", borderRadius: 10, height: 40, border: "none"}}
+                  onClick={changeCommunityImage}
+                  >
+                    See More
+                  </button>
                 </Box>  
               </div>
             </Box> 
