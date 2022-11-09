@@ -13,3 +13,7 @@
 .logoLogin {
   margin-left: 20%;
 }
+
+.homeCard::-webkit-scrollbar {
+  display: none;
+}

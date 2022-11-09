@@ -170,6 +170,7 @@ const Header = ({ logOut }) => {
               &nbsp;
 
               {user?.role === ("admin" || "organizer") ? (
+                <>
                 <Button
                     onClick={() => {
                     handleCloseNavMenu()
@@ -179,13 +180,15 @@ const Header = ({ logOut }) => {
                 >
                     Create An Event
                 </Button>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                </>
               ): (
-                " "
+                ""
               )}
               
-              &nbsp;
-              &nbsp;
-              &nbsp;
+              
               <Button
                 onClick={() => {
                   handleCloseNavMenu()

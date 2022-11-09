@@ -44,7 +44,7 @@ function App() {
           <Routes>
             <Route exact='true' path='/' element={<Hero />}/>
             <Route exact='true' path='/login' element={<Login setCurrentUser={setCurrentUser} />}/>
-            <Route path='/user-profiles/:id' element={<UserProfile setCurrentUser={setCurrentUser} />}/>
+            <Route path='/user-profiles/:id' element={<UserProfile user={user} setCurrentUser={setCurrentUser} />}/>
             <Route path='/about-us' element={<AboutUs />}/>
             <Route path='/create-an-event' element={<CreateAnEvent setCurrentUser={setCurrentUser} />}/>
           </Routes>
