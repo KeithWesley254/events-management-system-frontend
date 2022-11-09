@@ -14,14 +14,6 @@ const Login = ({ setCurrentUser }) => {
           <Grid container spacing={2} columns={12}>
             <Grid item xs={12} md={6}>
 
-              <div className='logoLogin'>
-                <p style={{fontWeight: "bolder", fontSize: 14}}>
-                  Events
-                  <br />
-                  <span style={{ color: "#d1410a" }}>Bomboclat</span>
-                </p>
-              </div>
-
               {showLogin ? (
                 <>
                 <div className='loginForm'>

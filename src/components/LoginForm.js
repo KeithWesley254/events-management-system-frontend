@@ -23,9 +23,10 @@ const LoginForm = ({ setCurrentUser }) => {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => {
-          localStorage.token = user.jwt;
+          window.localStorage.setItem("token", JSON.stringify(user.jwt));
           setCurrentUser(user.user);
           navigate('/')
+          window.location.reload()
         });
       } else {
         r.json().then((err) => setErrors(err.errors));

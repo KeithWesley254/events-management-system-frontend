@@ -28,11 +28,12 @@ const SignUpForm = ({ setCurrentUser }) => {
       }),
     }).then((r) => {
       setIsLoading(false);
-      if (r.created) {
+      if (r.ok) {
         r.json().then((user) => {
-          localStorage.token = user.jwt;
+          window.localStorage.setItem("token", JSON.stringify(user.jwt));
           setCurrentUser(user.user);
           navigate('/')
+          window.location.reload()
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -44,13 +45,13 @@ const SignUpForm = ({ setCurrentUser }) => {
    <>
       <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}>
         <div>
-          <p style={{fontWeight: "bolder", fontSize: 30}}>Sign Up</p>
+          <p style={{fontWeight: "bolder", fontSize: 50}}>Sign Up</p>
         </div>
         <form  onSubmit={handleSubmit}>
           <Box>
             <Grid container spacing={2} columns={12}>
                <Grid item xs={12} md={6}>
-              <br />
+
               <FormControl>
                 <TextField 
                 type="email"
