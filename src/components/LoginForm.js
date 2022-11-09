@@ -2,43 +2,36 @@ import { Alert, Box, FormControl, FormHelperText, TextField } from '@mui/materia
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({ setCurrentUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState({});
 
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    fetch("http://localhost:3000/users/sign_in", {
+    fetch('http://localhost:3000/login', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        user: {
-            email, 
-            password 
-        }
-    }),
+      body: JSON.stringify({ email, password }),
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => {
-          setUserData(user)
-          navigate('/homepage')
+          localStorage.token = user.jwt;
+          setCurrentUser(user.user);
+          navigate('/')
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
     });
   }
-
-  console.log(userData)
 
   return (
     <>
