@@ -362,36 +362,63 @@ const Header = ({ logOut }) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography
-                  textAlign="center"
-                  onClick={() => navigate(`/user-profiles/${user?.id}`)}
-                  sx={{
-                    my: 1,
-                    display: "block",
-                    fontSize: 14,
-                    fontWeight: "bolder",
-                    color: "black",
+              {"role" in user ? (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    textAlign="center"
+                    onClick={() => navigate(`/user-profiles/${user?.id}`)}
+                    sx={{
+                      my: 1,
+                      display: "block",
+                      fontSize: 14,
+                      fontWeight: "bolder",
+                      color: "black",
+                    }}
+                  >
+                    Profile
+                  </Typography>
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/login");
                   }}
                 >
-                  Profile
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography
-                  textAlign="center"
-                  onClick={handleLogoutClick}
-                  sx={{
-                    my: 1,
-                    display: "block",
-                    fontSize: 14,
-                    fontWeight: "bolder",
-                    color: "black",
-                  }}
-                >
-                  Logout
-                </Typography>
-              </MenuItem>
+                  <Typography
+                    sx={{
+                      my: 1,
+                      display: "block",
+                      fontSize: 14,
+                      fontWeight: "bolder",
+                      color: "black",
+                    }}
+                    textAlign="center"
+                  >
+                    Log In / Sign Up
+                  </Typography>
+                </MenuItem>
+              )}
+
+              {"role" in user ? (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    textAlign="center"
+                    onClick={handleLogoutClick}
+                    sx={{
+                      my: 1,
+                      display: "block",
+                      fontSize: 14,
+                      fontWeight: "bolder",
+                      color: "black",
+                    }}
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
+              ) : (
+                " "
+              )}
             </Menu>
           </Box>
         </Toolbar>

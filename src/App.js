@@ -22,6 +22,7 @@ function App() {
     localStorage.clear();
     window.location.reload();
   }
+  console.log(user);
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
