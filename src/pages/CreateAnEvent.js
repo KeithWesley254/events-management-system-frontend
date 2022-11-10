@@ -237,24 +237,18 @@ export default function CreateAnEvent() {
           <React.Fragment>
             <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
               <Stack>
-                <Typography variant="subtitle1">
-                  Early Regular Booking Ticket Price ($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">Description</Typography>
+                <Typography variant="subtitle1">Ticket Format</Typography>
+                <TextField sx={{ mb: 1.5 }} variant="filled" required />
 
+                <Typography variant="subtitle1">Description</Typography>
                 <TextField multiline rows={4} />
 
                 <Typography variant="subtitle1">Banner Image</Typography>
                 <TextField sx={{ mb: 1.5 }} variant="filled" required />
+
                 <Typography variant="subtitle1">First Image url</Typography>
                 <TextField sx={{ mb: 1.5 }} variant="filled" required />
+
                 <Typography variant="subtitle1">Second Image url</Typography>
                 <TextField sx={{ mb: 1.5 }} variant="filled" required />
               </Stack>
