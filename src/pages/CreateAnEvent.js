@@ -45,9 +45,8 @@ export default function CreateAnEvent() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   const handleSubmit = () => {
-    setActiveStep(0);
+    console.log("Yet to Submit");
   };
-
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -70,17 +69,6 @@ export default function CreateAnEvent() {
             );
           })}
         </Stepper>
-        {activeStep === steps.length && (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleSubmit}>Submit</Button>
-            </Box>
-          </React.Fragment>
-        )}
         {activeStep === 0 && (
           <React.Fragment>
             <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
@@ -239,10 +227,52 @@ export default function CreateAnEvent() {
                 Back
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-
               <Button onClick={handleNext}>
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
+            </Box>
+          </React.Fragment>
+        )}
+        {activeStep === 2 && (
+          <React.Fragment>
+            <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
+              <Stack>
+                <Typography variant="subtitle1">
+                  Early Regular Booking Ticket Price ($)
+                </Typography>
+                <TextField
+                  type="number"
+                  min="0"
+                  sx={{ mb: 1.5 }}
+                  variant="filled"
+                  required
+                />
+                <Typography variant="subtitle1">Description</Typography>
+
+                <TextField multiline rows={4} />
+
+                <Typography variant="subtitle1">Banner Image</Typography>
+                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+                <Typography variant="subtitle1">First Image url</Typography>
+                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+                <Typography variant="subtitle1">Second Image url</Typography>
+                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+              </Stack>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              <Typography sx={{ mt: 2, mb: 1, justifyContent: "center" }}>
+                All steps completed
+              </Typography>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleSubmit}>Submit</Button>
             </Box>
           </React.Fragment>
         )}
