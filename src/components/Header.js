@@ -32,6 +32,8 @@ const Header = ({ logOut }) => {
 
   }, [])
 
+  console.log(user)
+
   function handleLogoutClick() {
     setTheUser({})
     logOut();

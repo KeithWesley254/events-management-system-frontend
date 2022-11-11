@@ -7,8 +7,8 @@ import UserProfile from './pages/UserProfile';
 import AboutUs from './pages/AboutUs';
 import CreateAnEvent from './pages/CreateAnEvent'
 import Header from './components/Header';
-import SpecificCategory from './components/SpecificCategory';
-import SpecificEvent from './components/SpecificEvent';
+import SpecificCategory from './pages/SpecificCategory';
+import SpecificEvent from './pages/SpecificEvent';
 
 function App() {
   const [user, setUser] = useState({});
