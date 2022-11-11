@@ -3,21 +3,59 @@ import {
   Box,
   Stepper,
   Step,
-  Grid,
-  StepLabel,
   Button,
   Typography,
   TextField,
   MenuItem,
+  StepButton,
   Stack,
+  Input,
+  Select,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  OutlinedInput,
 } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import { useNavigate } from "react-router-dom";
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const steps = ["Main Event Details", "Pricing", "Miscellaneous"];
 
 export default function CreateAnEvent() {
-  const [activeStep, setActiveStep] = useState(0);
   const [categoryData, setCategoryData] = useState([]);
-  const [skipped, setSkipped] = useState(new Set());
+  const [activeStep, setActiveStep] = useState(0);
+  const [completed, setCompleted] = useState({});
+  const [formData, setFormData] = useState({
+    category_id: '',
+    title: '',
+    event_start_date: '',
+    event_end_date: '',
+    ticket_format: '',
+    early_booking_end_date: '',
+    early_booking_price_regular: '',
+    early_booking_price_vip: '',
+    location: '',
+    regular_price: '',
+    vip_price: '',
+    vip_no_of_tickets: '',
+    regular_no_of_tickets: '',
+    description: '',
+    banner_img: '',
+    image_url1: '',
+    image_url2: ''
+  });
+  const [state, setState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+
+  const { vertical, horizontal, open } = state;
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/categories`)
@@ -26,27 +64,89 @@ export default function CreateAnEvent() {
         setCategoryData(data);
       });
   }, []);
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
+
+  const totalSteps = () => {
+    return steps.length;
+  };
+
+  const completedSteps = () => {
+    return Object.keys(completed).length;
+  };
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1;
+  };
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps();
   };
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    const newActiveStep =
+      isLastStep() && !allStepsCompleted()
+        ? 
+          steps.findIndex((step, i) => !(i in completed))
+        : activeStep + 1;
+    setActiveStep(newActiveStep);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  const handleSubmit = () => {
-    console.log("Yet to Submit");
+
+  const handleStep = (step) => () => {
+    setActiveStep(step);
   };
+
+  const handleComplete = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    handleNext();
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    setCompleted({});
+  };
+
+  function handleChange(e){
+    setFormData({
+        ...formData, [e.target.name]: e.target.value,
+    });
+  }
+  
+  const navigate = useNavigate();
+  
+  function handleSubmit(e, newState){
+    e.preventDefault();
+    const data = new FormData();
+    
+    Object.keys(formData).forEach(key => {
+      data.append(key, formData[key])
+    });
+
+    submitToApi(data, newState);
+  }
+
+  function submitToApi(data, newState){
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    fetch(`http://localhost:3000/api/events`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        method: "POST",
+        body: data
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          setState({ open: true, ...newState });
+          navigate("/");
+        });
+      }}) 
+  }
+
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -54,223 +154,229 @@ export default function CreateAnEvent() {
           <i>Register your Event</i>
         </h1>
       </div>
-      <Box sx={{ width: "100%" }}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+
+      
+        <Box sx={{ width: "100%" }}>
+          <Stepper nonLinear activeStep={activeStep}>
+            {steps.map((label, index) => (
+              <Step key={label} completed={completed[index]}>
+                <StepButton color="inherit" onClick={handleStep(index)}>
+                  {label}
+                </StepButton>
               </Step>
-            );
-          })}
-        </Stepper>
-        {activeStep === 0 && (
-          <React.Fragment>
-            <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
-              <Stack>
-                <Typography variant="subtitle1">Event Category</Typography>
-                <TextField select sx={{ mb: 1.5 }} variant="filled" required>
-                  {categoryData.map((category) => {
-                    return (
-                      <MenuItem key={category.id} value={category.id}>
-                        {category.title}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
-                <Typography variant="subtitle1">Event Title </Typography>
-                <TextField
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  placeholder="eg. BDO tournament"
-                  required
-                />
-                <Typography variant="subtitle1">Location </Typography>
-                <TextField
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  placeholder="eg. Canivore grounds Nairobi"
-                  required
-                />
-                <Typography variant="subtitle1">Event Starting Date</Typography>
-                <TextField
-                  id="datetime-local"
-                  required
-                  type="datetime-local"
-                  defaultValue="yyyy-mm-ddT--:--"
-                  sx={{ width: 250, mb: 1.5 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <Typography variant="subtitle1">Event Ending Date</Typography>
-                <TextField
-                  id="datetime-local"
-                  required
-                  type="datetime-local"
-                  defaultValue="yyyy-mm-ddT--:--"
-                  sx={{ width: 250, mb: 1.5 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <Typography variant="subtitle1">
-                  Early Booking End Date
-                </Typography>
-                <TextField
-                  id="datetime-local"
-                  required
-                  type="datetime-local"
-                  defaultValue="yyyy-mm-ddT--:--"
-                  sx={{ width: 250, mb: 1.5 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Stack>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
+            ))}
+          </Stepper>
 
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        )}
-        {activeStep === 1 && (
-          <React.Fragment>
-            <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
-              <Stack>
-                <Typography variant="subtitle1">
-                  Early Regular Booking Ticket Price ($)
+          {allStepsCompleted() ? (
+              <React.Fragment>
+                <Typography sx={{ mt: 2, mb: 1 }}>
+                  All steps completed - you&apos;re finished
                 </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">
-                  Early Vip Booking Ticket Price ($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">
-                  Vip Booking Ticket Price ($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">
-                  Regular Booking Ticket Price ($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">
-                  Number of Vip Tickets($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-                <Typography variant="subtitle1">
-                  Number of Regular Tickets($)
-                </Typography>
-                <TextField
-                  type="number"
-                  min="0"
-                  sx={{ mb: 1.5 }}
-                  variant="filled"
-                  required
-                />
-              </Stack>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        )}
-        {activeStep === 2 && (
-          <React.Fragment>
-            <Box sx={{ mt: 2, mb: 1, width: "50%" }}>
-              <Stack>
-                <Typography variant="subtitle1">Ticket Format</Typography>
-                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  <Box sx={{ flex: '1 1 auto' }} />
+                  <Button onClick={handleReset}>Reset</Button>
+                </Box>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  <Button
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mr: 1 }}
+                  >
+                    Back
+                  </Button>
+                  <Box sx={{ flex: '1 1 auto' }} />
+                  <Button onClick={handleNext} sx={{ mr: 1 }}>
+                    Next
+                  </Button>
+                  {activeStep !== steps.length &&
+                    (completed[activeStep] ? (
+                      <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                        Step {activeStep + 1} already completed
+                      </Typography>
+                    ) : (
+                      <Button onClick={handleComplete}>
+                        {completedSteps() === totalSteps() - 1
+                          ? 'Finish'
+                          : 'Complete Step'}
+                      </Button>
+                    ))}
+                </Box>
 
-                <Typography variant="subtitle1">Description</Typography>
-                <TextField multiline rows={4} />
+                <form>
 
-                <Typography variant="subtitle1">Banner Image</Typography>
-                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+                  <Box sx={{justifyContent: "center", display: "inline-flex", width: "100%", textAlign: "center"}}>
+                  {activeStep === 0 && (
+                      <React.Fragment>
+                        <Box sx={{ width: "35%" }}>
+                          <Stack>
 
-                <Typography variant="subtitle1">First Image url</Typography>
-                <TextField sx={{ mb: 1.5 }} variant="filled" required />
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel id="outlined-required"><span style={{color: "red"}}>*</span> Event Category</InputLabel>
+                              <Select 
+                              labelId="EventCategory"
+                              name='category_id'
+                              onChange={handleChange}
+                              required
+                              label="Event Category"
+                              >
+                                <MenuItem value="">--Please choose a category--</MenuItem>
+                                {categoryData.map((category) => {
+                                  return (
+                                    <MenuItem key={category.id} value={category.id}>
+                                      {category.title}
+                                    </MenuItem>
+                                  );
+                                })}
+                              </Select>
+                              <FormHelperText id="my-helper-text">Please select a category</FormHelperText>
+                            </FormControl>
+                            
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Event Title</InputLabel>
+                              <OutlinedInput onChange={handleChange} value={formData.title} name="title" label="Event Title" required placeholder="eg. BDO tournament"/>
+                              <FormHelperText id="my-helper-text">Please enter the title of the event</FormHelperText>
+                            </FormControl>
 
-                <Typography variant="subtitle1">Second Image url</Typography>
-                <TextField sx={{ mb: 1.5 }} variant="filled" required />
-              </Stack>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Typography sx={{ mt: 2, mb: 1, justifyContent: "center" }}>
-                All steps completed
-              </Typography>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleSubmit}>Submit</Button>
-            </Box>
-          </React.Fragment>
-        )}
-      </Box>
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Location</InputLabel>
+                              <OutlinedInput name="location" onChange={handleChange} value={formData.location} label="Location" required placeholder="eg. Westlands, Nairobi"/>
+                              <FormHelperText id="my-helper-text">Please enter the location of the event</FormHelperText>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <Typography><span style={{color: "red"}}>*</span> Event Start Date</Typography>
+                              <Input required type='datetime-local' name="event_start_date" onChange={handleChange} value={formData.event_start_date}/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <Typography><span style={{color: "red"}}>*</span> Event End Date</Typography>
+                              <Input required type='datetime-local' name="event_end_date" onChange={handleChange} value={formData.event_end_date}/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <Typography><span style={{color: "red"}}>*</span> Early Booking End Date</Typography>
+                              <Input required type='datetime-local' name="early_booking_end_date" onChange={handleChange} value={formData.early_booking_end_date}/>
+                            </FormControl>
+
+                          </Stack>
+                        </Box>
+                      </React.Fragment>
+                    )}
+                    {activeStep === 1 && (
+                      <React.Fragment>
+                        <Box sx={{ width: "35%" }}>
+                          <Stack>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Early Regular Booking Ticket Price ($)</InputLabel>
+                              <OutlinedInput label="Early Regular Booking Ticket Price ($)" required min={0} name="early_booking_price_regular" onChange={handleChange} value={formData.early_booking_price_regular} type='number'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Early Vip Booking Ticket Price ($)</InputLabel>
+                              <OutlinedInput label="Early Vip Booking Ticket Price ($)" required min={0} name="early_booking_price_vip" onChange={handleChange} value={formData.early_booking_price_vip} type='number'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Regular Price ($)</InputLabel>
+                              <OutlinedInput label="Regular Price ($)" required min={0} name="regular_price" onChange={handleChange} value={formData.regular_price} type='number'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Vip Price ($)</InputLabel>
+                              <OutlinedInput label="Vip Price ($)" required min={0} name="vip_price" onChange={handleChange} value={formData.vip_price} type='number'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Number of Vip Tickets</InputLabel>
+                              <OutlinedInput label="Number of Vip Tickets" required min={0} name="vip_no_of_tickets" onChange={handleChange} value={formData.vip_no_of_tickets} type='number'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Number of Regular Tickets</InputLabel>
+                              <OutlinedInput label="Number of Regular Tickets" required min={0} name="regular_no_of_tickets" onChange={handleChange} value={formData.regular_no_of_tickets} type='number'/>
+                            </FormControl>
+
+                          </Stack>
+                        </Box>
+
+                      </React.Fragment>
+                    )}
+                    {activeStep === 2 && (
+                      <React.Fragment>
+                        <Box sx={{ width: "35%" }}>
+                          <Stack>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Ticket Format</InputLabel>
+                              <OutlinedInput label="Ticket Format" required name="ticket_format" onChange={handleChange} value={formData.ticket_format} placeholder='eg. BDOTourney' type='text'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <TextField label="Description" required name="description" onChange={handleChange} value={formData.description} multiline rows={4} />
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Banner Image Url</InputLabel>
+                              <OutlinedInput label="Banner Image Url" required name="banner_img" onChange={handleChange} value={formData.banner_img} type='text'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> First Event Image Url</InputLabel>
+                              <OutlinedInput label="First Event Image Url" required name="image_url1" onChange={handleChange} value={formData.image_url1} type='text'/>
+                            </FormControl>
+
+                            <FormControl fullWidth sx={{ m: 1}}>
+                              <InputLabel><span style={{color: "red"}}>*</span> Second Event Image Url</InputLabel>
+                              <OutlinedInput label="Second Event Image Url" required name="image_url2" onChange={handleChange} value={formData.image_url2} type='text'/>
+                            </FormControl>
+
+                            <Box >
+                              <FormControl sx={{ m: 1, width: "70%"}}>
+                                <Button
+                                type='submit'
+                                onClick={(e) => {
+                                  handleSubmit(e, {
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                  })
+                                }}
+                                style={{ 
+                                backgroundColor: "#d1410a", 
+                                color: "#fff",
+                                width: "100%"
+                                }}
+                                >
+                                  Submit
+                                </Button>
+                              </FormControl>
+                            </Box>
+                                
+                          </Stack>
+                        </Box>
+
+                      </React.Fragment>
+                      )}
+                  </Box>
+                </form>
+                <Snackbar
+                  anchorOrigin={{ vertical, horizontal }}
+                  open={open}
+                  autoHideDuration={6000}
+                  key={vertical + horizontal}
+                >
+                  <Alert severity="success" sx={{ width: '100%' }}>
+                    Event Registered Successfully!
+                  </Alert>
+                </Snackbar>
+              </React.Fragment>
+              )}
+        </Box>
+      
     </>
   );
 }
