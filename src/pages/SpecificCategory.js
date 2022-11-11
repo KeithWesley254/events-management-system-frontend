@@ -33,27 +33,38 @@ const SpecificCategory = () => {
   return (
     <main>
       <Grid container columns={12}>
-        <Grid item xs={6} md={6}>
-            <div>
-              <Typography style={{display: "inline-block", paddingTop: 150, color: "#fff", fontWeight: "bolder", fontSize: 60, textAlign: "center", width: "100%", height: "405px", backgroundColor: "#d1410a"}}
-              >
-                {categoryData?.title}
-              </Typography>
-            </div>
-        </Grid>
-        <Grid item xs={6} md={6}>
-          <div>
-            <img 
-              src={categoryData?.banner_img}
-              alt={categoryData?.title}
-              style={{
-                width: "100%",
-                height: "405px",
-                display: "block"
-              }}
-              />
-            </div>
-        </Grid>
+       
+        
+          <Grid item xs={6} md={6}>
+            
+            <Box sx={{textAlign: {xs: "center", md: "center" } }}>
+              <Box sx={{height: {xs: "200px", md: "450px"}, backgroundColor: "#d1410a", width: "100%", display: "inline-flex", justifyContent: "center", textAlign: "center" }}>
+                <Typography sx={{ pt: {xs: 8, md: 20}, color: "#fff", fontWeight: "bolder", fontSize: {xs: 40, md: 60} }}>
+                  {categoryData?.title}
+                </Typography>
+              </Box>
+              
+            </Box>
+            
+          </Grid>
+
+          <Grid item xs={6} md={6}>
+
+            <Box sx={{textAlign: {xs: "center", md: "center" } }}>
+              <Box sx={{height: {xs: "200px", md: "450px"}, width: "100%", display: "inline-flex", justifyContent: "center", textAlign: "center" }}>
+                <Typography>
+                    <CardMedia
+                      component="img"
+                      alt={categoryData?.title}
+                      sx={{height: {xs: "200px", md: "450px"} }}
+                      image={categoryData?.banner_img}
+                    />
+                </Typography>
+              </Box>
+              
+            </Box>
+          </Grid>
+        
       </Grid>
 
       <Grid container spacing={2} columns={12}>
@@ -68,39 +79,50 @@ const SpecificCategory = () => {
                 return (
                   
                       <div key={event.id}>
-                        <Card className="homeCard" style={{ 
-                          textAlign: "left", 
-                          width: 280, 
-                          height: 500, 
-                          padding: 2, 
-                          cursor: "pointer",
-                          overflowY: "scroll"
+                        <Card
+                          className="homeCard"
+                          sx={{
+                            textAlign: "left",
+                            width: 280,
+                            height: 380,
+                            cursor: "pointer",
+                            overflowY: "scroll",
+                            "&:hover": {boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px", }
                           }}
                           onClick={() => navigate(`/specific-event/${event.id}`)}
                         >
-                            <CardMedia
-                                component="img"
-                                height="200px"
-                                image={event.banner_img}
-                                alt={event.title}
-                            />
-                            <CardContent>
-                                <div style={{fontFamily: "nunito"}}>
-                                    <h1 style={{fontWeight: "bolder", fontSize: "15"}}>{event.title}</h1>
-                                    <p style={{fontSize: 15}}><b><i>Date</i></b></p>
-                                    <p>{new Date(event.event_start_date).toDateString()}</p>
-                                    <p style={{color: "#d1410a"}}>{event.time_diff < 0 ?
-                                    (<p>Event has passed</p>)
-                                    : (
-                                        <i>{event.time_diff + " days remaining"}</i>
-                                    )
-                                    }
-                                    </p>
-                                    <p style={{fontSize: 15}}><b><i>Location</i></b></p>
-                                    <p>{event.location}</p>
-                                </div>
-                            </CardContent>
+                          <CardMedia
+                            component="img"
+                            height="150px"
+                            image={event.banner_img}
+                            alt={event.title}
+                          />
+                          <CardContent>
                             
+                            <Typography variant="h1" sx={{ color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bolder", fontSize: 20 }}>
+                              {event.title}
+                            </Typography>
+                            <br />
+                            
+                            <Typography variant="body1" sx={{ fontSize: 15, color: "#d1410a"}}>
+                              {new Date(event.event_start_date).toDateString()}
+                            </Typography>
+                            <br />
+                            
+                            <Typography variant="body1" sx={{ fontSize: 15, color: "#707286"}}>
+                              {event.location}
+                            </Typography>
+                            <br />
+                            
+                            <Typography variant="body1" sx={{ fontSize: 15, color: "#0724ea"}}>
+                              {event.time_diff < 0 ? (
+                                <p>Event has passed</p>
+                              ) : (
+                                <i>{event.time_diff + " days remaining"}</i>
+                              )}
+                            </Typography>
+
+                          </CardContent>
                         </Card>
                         &nbsp;
                       </div>

@@ -44,7 +44,7 @@ const AboutUs = () => {
         <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
             <div style={{
-              display: "flex", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
+              display: "flex", color: "#1d0a3c", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
               }}>
                 <p>
                   About Us
@@ -74,18 +74,27 @@ const AboutUs = () => {
             <Box sx={{ml: 4, mr: 4}}>
               <div>
                 <Box>
-                  <Typography>
+                  <Typography sx={{color: "#707286"}}>
                     {aboutUsData[randomIndexAbout]?.about_description}
                   </Typography>
                 </Box>
                 <br />  
                 <Box sx={{display: "flex", justifyContent: "center"}}>
-                  <button
-                  style={{backgroundColor: "#d1410a", cursor: "pointer", width: "50%", margin: 20, color: "#fff", borderRadius: 10, height: 40, border: "none"}}
+                  <Button
+                  sx={{mt: 3, 
+                  backgroundColor: "#d1410a", 
+                  color: "#fff",
+                  width: "50%",
+                  height: "50%",
+                  borderRadius: 2,
+                  ml: {xs: 2, md: 2}, 
+                  mr: {xs: 2, md: 2},
+                  "&:hover": {backgroundColor: "black", }
+                  }}
                   onClick={changeAboutImage}
                   >
-                    See More
-                  </button>
+                    More Stories About Us
+                  </Button>
                 </Box>
               </div>
             </Box> 
@@ -95,7 +104,7 @@ const AboutUs = () => {
         <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
             <div style={{
-              display: "flex", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
+              display: "flex", color: "#1d0a3c", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
               }}>
                 <p>
                   Community Impact
@@ -125,18 +134,29 @@ const AboutUs = () => {
             <Box sx={{ml: 4, mr: 4}}>
               <div>
                 <Box>
-                  <Typography>
+                  <Typography sx={{color: "#707286"}}>
                     {communityData[randomIndexCommunity]?.community_description}
                   </Typography>
                 </Box>
                 <br />  
                 <Box sx={{display: "flex", justifyContent: "center"}}>
-                  <button
-                  style={{backgroundColor: "#d1410a", cursor: "pointer", width: "50%", margin: 20, color: "#fff", borderRadius: 10, height: 40, border: "none"}}
+                  
+                  <Button
+                  sx={{mt: 3, 
+                  backgroundColor: "#d1410a", 
+                  color: "#fff",
+                  width: "50%",
+                  height: "50%",
+                  borderRadius: 2,
+                  ml: {xs: 2, md: 2}, 
+                  mr: {xs: 2, md: 2},
+                  "&:hover": {backgroundColor: "black", }
+                  }}
                   onClick={changeCommunityImage}
                   >
-                    See More
-                  </button>
+                    More Community Impact Stories
+                  </Button>
+                 
                 </Box>  
               </div>
             </Box> 

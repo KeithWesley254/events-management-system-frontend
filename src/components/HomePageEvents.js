@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,47 +24,47 @@ const HomePageEvents = ({ events }) => {
           <div key={event.id}>
             <Card
               className="homeCard"
-              style={{
+              sx={{
                 textAlign: "left",
                 width: 280,
-                height: 500,
-                padding: 2,
+                height: 380,
                 cursor: "pointer",
                 overflowY: "scroll",
+                "&:hover": {boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px", }
               }}
               onClick={() => navigate(`/specific-event/${event.id}`)}
             >
               <CardMedia
                 component="img"
-                height="200px"
+                height="150px"
                 image={event.banner_img}
                 alt={event.title}
               />
               <CardContent>
-                <div style={{ fontFamily: "nunito" }}>
-                  <h1 style={{ fontWeight: "bolder", fontSize: "15" }}>
-                    {event.title}
-                  </h1>
-                  <p style={{ fontSize: 15 }}>
-                    <b>
-                      <i>Date</i>
-                    </b>
-                  </p>
-                  <p>{new Date(event.event_start_date).toDateString()}</p>
-                  <p style={{ color: "#d1410a" }}>
-                    {event.time_diff < 0 ? (
-                      <p>Event has passed</p>
-                    ) : (
-                      <i>{event.time_diff + " days remaining"}</i>
-                    )}
-                  </p>
-                  <p style={{ fontSize: 15 }}>
-                    <b>
-                      <i>Location</i>
-                    </b>
-                  </p>
-                  <p>{event.location}</p>
-                </div>
+                
+                <Typography variant="h1" sx={{ color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bolder", fontSize: 20 }}>
+                  {event.title}
+                </Typography>
+                <br />
+                  
+                <Typography variant="body1" sx={{ fontSize: 15, color: "#d1410a"}}>
+                  {new Date(event.event_start_date).toDateString()}
+                </Typography>
+                <br />
+                
+                <Typography variant="body1" sx={{ fontSize: 15, color: "#707286"}}>
+                  {event.location}
+                </Typography>
+                <br />
+                
+                <Typography variant="body1" sx={{ fontSize: 15, color: "#5072ff"}}>
+                  {event.time_diff < 0 ? (
+                    <p>Event has passed</p>
+                  ) : (
+                    <i>{event.time_diff + " days remaining"}</i>
+                  )}
+                </Typography>
+
               </CardContent>
             </Card>
             &nbsp;

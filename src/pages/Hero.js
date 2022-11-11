@@ -56,7 +56,7 @@ const Hero = () => {
       <Grid container spacing={2} columns={12}>
         <Grid item xs={12} md={12}>
           <Box>
-            <div style={{fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
+            <div style={{color: "#1d0a3c", fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
               <p>Check out trending categories</p>
             </div>
           </Box>
@@ -73,7 +73,7 @@ const Hero = () => {
 
       <Grid container spacing={2} columns={12}>
         <Grid item xs={12} md={12}>
-          <div style={{fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
+          <div style={{ color: "#1d0a3c", fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
             <p>Events available</p>
           </div>
         </Grid>

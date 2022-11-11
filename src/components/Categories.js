@@ -23,7 +23,7 @@ const Categories = ({categories}) => {
                             }}
                             onClick={() => navigate(`/specific-category/${category.id}`)}
                             >
-                            <p style={{marginTop: 10}}><b>{category.title}</b></p>
+                            <p style={{fontSize: 15, marginTop: 10, color: "#1d0a3c", fontWeight: "bolder"}}>{category.title}</p>
                             </div>
 
                         &nbsp;

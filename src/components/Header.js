@@ -256,7 +256,7 @@ const Header = ({ logOut }) => {
                 textTransform: "none",
                 display: "block",
                 fontSize: 14,
-                fontWeight: "bolder",
+                fontWeight: "bold",
                 color: "black",
               }}
             >
@@ -275,8 +275,8 @@ const Header = ({ logOut }) => {
                     textTransform: "none",
                     display: "block",
                     fontSize: 14,
-                    fontWeight: "bolder",
-                    color: "black",
+                    fontWeight: "bold",
+                    color: "#0724ea",
                   }}
                 >
                   Create An Event
@@ -296,7 +296,7 @@ const Header = ({ logOut }) => {
                 textTransform: "none",
                 display: "block",
                 fontSize: 14,
-                fontWeight: "bolder",
+                fontWeight: "bold",
                 color: "black",
               }}
             >
@@ -314,7 +314,7 @@ const Header = ({ logOut }) => {
                   textTransform: "none",
                   display: "block",
                   fontSize: 14,
-                  fontWeight: "bolder",
+                  fontWeight: "bold",
                   color: "black",
                 }}
               >
@@ -371,7 +371,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bolder",
+                      fontWeight: "bold",
                       color: "black",
                     }}
                   >
@@ -390,7 +390,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bolder",
+                      fontWeight: "bold",
                       color: "black",
                     }}
                     textAlign="center"
@@ -409,7 +409,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bolder",
+                      fontWeight: "bold",
                       color: "black",
                     }}
                   >

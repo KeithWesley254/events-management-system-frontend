@@ -211,7 +211,7 @@ export default function CreateAnEvent() {
                   <Box sx={{justifyContent: "center", display: "inline-flex", width: "100%", textAlign: "center"}}>
                   {activeStep === 0 && (
                       <React.Fragment>
-                        <Box sx={{ width: "35%" }}>
+                        <Box sx={{ width: {xs: "80%", md: "35%"} }}>
                           <Stack>
 
                             <FormControl fullWidth sx={{ m: 1}}>
@@ -268,7 +268,7 @@ export default function CreateAnEvent() {
                     )}
                     {activeStep === 1 && (
                       <React.Fragment>
-                        <Box sx={{ width: "35%" }}>
+                        <Box sx={{ width: {xs: "80%", md: "35%"} }}>
                           <Stack>
 
                             <FormControl fullWidth sx={{ m: 1}}>
@@ -308,7 +308,7 @@ export default function CreateAnEvent() {
                     )}
                     {activeStep === 2 && (
                       <React.Fragment>
-                        <Box sx={{ width: "35%" }}>
+                        <Box sx={{ width: {xs: "80%", md: "35%"} }}>
                           <Stack>
 
                             <FormControl fullWidth sx={{ m: 1}}>
