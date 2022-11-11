@@ -42,7 +42,7 @@ const Header = ({ logOut }) => {
         setIsLoading(false);
       });
   }, []);
-  console.log(user);
+  
   function handleLogoutClick() {
     setTheUser({});
     logOut();

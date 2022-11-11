@@ -34,16 +34,17 @@ const Hero = () => {
             >
                 {(Array.isArray(homeBanners) ? homeBanners : []).map((banner) => {
                   return(
-                    <>
+                    <div key={banner.id}>
                       <img 
                         src={banner.image_url}
                         alt={banner.title}
                         style={{
                           width: "100%",
-                          height: "405px",
+                          height: "auto",
+                          maxHeight: "405px",
                         }}
                       />
-                    </>
+                    </div>
                   )
                 })}
                 

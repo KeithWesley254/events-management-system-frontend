@@ -21,7 +21,7 @@ const SpecificCategory = () => {
 
   if(isLoading === true) return (
     <Grid container spacing={2} columns={12}>
-      <Grid xs={12} md={12}>
+      <Grid item xs={12} md={12}>
         <Box sx={{ borderRadius: 20, display: "inline-flex", position: "relative", width: "100%", justifyContent: "center", flexDirection: 'row' }}>
           <div style={{marginTop: "25%", display: "inline-flex", justifyContent: "center"}}>
             <div className="loader"></div>
