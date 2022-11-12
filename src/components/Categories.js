@@ -1,8 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ThemeState } from "../ThemeContext";
 
 const Categories = ({categories}) => {
     const navigate = useNavigate();
+    const { categoryBtns, cBoxShadow } = ThemeState();
+
   return (
     <>
         <div style={{ marginRight: 10, marginLeft: 10, borderRadius: 20, gap: 20, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row' }}>
@@ -19,11 +22,11 @@ const Categories = ({categories}) => {
                             padding: 2, 
                             cursor: "pointer", 
                             borderRadius: 10,
-                            boxShadow: "5px 5px #d1410a"
+                            boxShadow: cBoxShadow
                             }}
                             onClick={() => navigate(`/specific-category/${category.id}`)}
                             >
-                            <p style={{fontSize: 15, marginTop: 10, color: "#1d0a3c", fontWeight: "bolder"}}>{category.title}</p>
+                            <p style={{fontSize: 15, marginTop: 10, color: categoryBtns, fontWeight: "bolder"}}>{category.title}</p>
                             </div>
 
                         &nbsp;

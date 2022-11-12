@@ -3,12 +3,14 @@ import { Box, Grid, LinearProgress } from '@mui/material';
 import Carousel from "react-material-ui-carousel";
 import Categories from '../components/Categories';
 import HomePageEvents from '../components/HomePageEvents';
+import { ThemeState } from "../ThemeContext";
 
 const Hero = () => {
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState([]);
   const [homeBanners, setHomeBanners] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { mainHeading } = ThemeState();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/events").then(r => r.json()).then(data => setEvents(data));
@@ -56,7 +58,7 @@ const Hero = () => {
       <Grid container spacing={2} columns={12}>
         <Grid item xs={12} md={12}>
           <Box>
-            <div style={{color: "#1d0a3c", fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
+            <div style={{color: mainHeading, fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
               <p>Check out trending categories</p>
             </div>
           </Box>
@@ -73,7 +75,7 @@ const Hero = () => {
 
       <Grid container spacing={2} columns={12}>
         <Grid item xs={12} md={12}>
-          <div style={{ color: "#1d0a3c", fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
+          <div style={{ color: mainHeading, fontWeight: "bolder", marginLeft: 40, fontSize: "30px"}}>
             <p>Events available</p>
           </div>
         </Grid>

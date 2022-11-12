@@ -12,6 +12,13 @@ export default function CryptoContext({ children }){
     const [mainHeading, setMainHeading] = useState("#1d0a3c")
     const [subTitles, setSubTitles] = useState("black")
     const [accent, setAccent] = useState("#d1410a")
+    const [categoryBtns, setCategoryBtns] = useState("black")
+    const [cBoxShadow, setCBoxShadow] = useState("5px 5px #d1410a")
+    const [cardBg, setCardBg] = useState("#fff")
+    const [cardHover, setCardHover] = useState("rgba(0, 0, 0, 0.56) 0px 22px 70px 4px")
+    const [formTextC, setFormTextC] = useState("black")
+    const [formAccent, setFormAccent] = useState("black")
+    const [formBg, setFormBg] = useState("#fff")
 
     useEffect(() => {
         if(isDarkMode === true) {
@@ -23,6 +30,13 @@ export default function CryptoContext({ children }){
             setMainHeading("#BB86FC")
             setSubTitles("#BB86FC")
             setAccent("#03DAC5")
+            setCategoryBtns("#e1e1e1")
+            setCBoxShadow("5px 5px #03DAC5")
+            setCardBg("#707286")
+            setCardHover("#03DAC5 0px 22px 70px 4px")
+            setFormTextC("#fff")
+            setFormAccent("#fff")
+            setFormBg("#0a1929")
         }
         else if(isDarkMode === false) {
             setBgColor("#fff")
@@ -33,6 +47,13 @@ export default function CryptoContext({ children }){
             setMainHeading("#1d0a3c")
             setSubTitles("black")
             setAccent("#d1410a")
+            setCategoryBtns("black")
+            setCBoxShadow("5px 5px #d1410a")
+            setCardBg("#fff")
+            setCardHover("rgba(0, 0, 0, 0.56) 0px 22px 70px 4px")
+            setFormTextC("black")
+            setFormAccent("black")
+            setFormBg("#fff")
         };
 
     }, [isDarkMode]);
@@ -43,6 +64,13 @@ export default function CryptoContext({ children }){
                 isDarkMode, 
                 bgColor,
                 mainHeading,
+                categoryBtns,
+                cardHover,
+                formBg,
+                formAccent,
+                formTextC,
+                cardBg,
+                cBoxShadow,
                 accent,
                 subTitles,
                 textColor, 

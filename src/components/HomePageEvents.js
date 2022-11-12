@@ -1,10 +1,12 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeState } from "../ThemeContext";
 
 const HomePageEvents = ({ events }) => {
   const filteredDates = events.filter((event) => parseInt(event.time_diff) > 0);
   const navigate = useNavigate();
+  const { cardBg, accent, categoryBtns, cardHover } = ThemeState();
 
   return (
     <div
@@ -27,10 +29,11 @@ const HomePageEvents = ({ events }) => {
               sx={{
                 textAlign: "left",
                 width: 280,
+                bgcolor: cardBg,
                 height: 380,
                 cursor: "pointer",
                 overflowY: "scroll",
-                "&:hover": {boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px", }
+                "&:hover": {boxShadow: cardHover, }
               }}
               onClick={() => navigate(`/specific-event/${event.id}`)}
             >
@@ -42,22 +45,22 @@ const HomePageEvents = ({ events }) => {
               />
               <CardContent>
                 
-                <Typography variant="h1" sx={{ color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bolder", fontSize: 20 }}>
+                <Typography variant="h1" sx={{ color: categoryBtns, fontFamily: "nunito", fontWeight: "bolder", fontSize: 20 }}>
                   {event.title}
                 </Typography>
                 <br />
                   
-                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: "#d1410a"}}>
+                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: accent}}>
                   {new Date(event.event_start_date).toUTCString()}
                 </Typography>
                 <br />
                 
-                <Typography variant="body1" sx={{ fontSize: 15, color: "#707286"}}>
+                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "regular", color: categoryBtns}}>
                   {event.location}
                 </Typography>
                 <br />
                 
-                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: "#5072ff"}}>
+                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: categoryBtns}}>
                   {event.time_diff < 0 ? (
                     <p>Event has passed</p>
                   ) : (
