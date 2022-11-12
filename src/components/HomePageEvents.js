@@ -47,8 +47,8 @@ const HomePageEvents = ({ events }) => {
                 </Typography>
                 <br />
                   
-                <Typography variant="body1" sx={{ fontSize: 15, color: "#d1410a"}}>
-                  {new Date(event.event_start_date).toDateString()}
+                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: "#d1410a"}}>
+                  {new Date(event.event_start_date).toUTCString()}
                 </Typography>
                 <br />
                 
@@ -57,7 +57,7 @@ const HomePageEvents = ({ events }) => {
                 </Typography>
                 <br />
                 
-                <Typography variant="body1" sx={{ fontSize: 15, color: "#5072ff"}}>
+                <Typography variant="body1" sx={{ fontSize: 15, fontWeight: "bold", color: "#5072ff"}}>
                   {event.time_diff < 0 ? (
                     <p>Event has passed</p>
                   ) : (

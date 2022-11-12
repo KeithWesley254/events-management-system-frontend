@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Grid, Backdrop, Modal, Fade, Button, Typography, Divider } from '@mui/material';
-import { gapi } from 'gapi-script';
-import BuyTicketForm from '../components/BuyTicketForm';
+import { loadGapiInsideDOM } from "gapi-script";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import ModalDialog from '../components/ModalDialog';
 
 const SpecificEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setTheUser] = useState({});
   const [eventOne, setEventOne] = useState({});
+  const [gapi, setGapi] = useState();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const params = useParams();
 
-  const CLIENT_ID =
-    "447222188463-85lhlk9i68pmspkinnergh07j228n2i7.apps.googleusercontent.com";
+  const CLIENT_ID = "447222188463-f1k48ogptrj7uvhc3ni3nea32ceu0gdn.apps.googleusercontent.com";
   const API_KEY = "AIzaSyDSu0IfbznPAlKhL8LKY6YZuwItkfLwLvE";
   const DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
   const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+
+  useEffect(() => {
+    gapiM();
+  }, []);
+
+  const gapiM = async () => {
+    const gapi = await loadGapiInsideDOM();
+    setGapi(gapi);
+  };
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -57,12 +66,23 @@ const SpecificEvent = () => {
     position: 'absolute',
     top: '50%',
     left: '50%',
+    height: "auto",
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
   };
+
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpenModal = () => {
+    setOpenModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
 
   const handleAdd = () => {
     gapi.load("client:auth2", () => {
@@ -108,23 +128,12 @@ const SpecificEvent = () => {
   const navigate = useNavigate();
 
   function handleBuyTicket() {
-    "error" in user ? (
+    if ("error" in user){
       navigate("/login")
-    ) : (
-      handleOpen()
-    )
+    }else{
+      handleOpenModal()
+    }
   }
-
-  var earlyEnding = new Date(eventOne.early_booking_end_date);
-  var datetime =
-    earlyEnding.toDateString() +
-    " " +
-    earlyEnding.getHours() +
-    ":" +
-    earlyEnding.getMinutes() +
-    ":" +
-    earlyEnding.getSeconds() +
-    "0";
 
   if(isLoading === true) return (
     <Grid container spacing={2} columns={12}>
@@ -191,7 +200,7 @@ const SpecificEvent = () => {
               </Typography>
 
               <Typography sx={{ color: "#707286", ml: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
-                {new Date(eventOne.event_start_date).toDateString()}
+                {new Date(eventOne.event_start_date).toUTCString()}
               </Typography>
             </Grid>
 
@@ -225,8 +234,8 @@ const SpecificEvent = () => {
 
           <Box sx={{width: "100%", display: "inline-flex", justifyContent: "center"}}>
             <Box sx={{border: 1, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
-              <Typography sx={{ fontWeight: "bold", color: "#707286", mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 20, md: 20} }} variant="body1">
-                {datetime}
+              <Typography sx={{ fontWeight: "bold", color: "#707286", mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
+                {new Date(eventOne.early_booking_end_date).toUTCString()}
               </Typography>
               
               {eventOne.early_timer < 0 ? (
@@ -311,7 +320,7 @@ const SpecificEvent = () => {
             <Box sx={{border: 1, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
               <Button
               sx={{mt: 3, 
-              backgroundColor: "#d1410a", 
+              backgroundColor: "#0724ea",
               color: "#fff",
               width: "50%",
               height: "50%",
@@ -327,7 +336,7 @@ const SpecificEvent = () => {
               &nbsp;
               <Button
               sx={{mt: 3, 
-              backgroundColor: "#d1410a", 
+              backgroundColor: "#0724ea",
               color: "#fff",
               width: "50%",
               height: "50%",
@@ -341,25 +350,11 @@ const SpecificEvent = () => {
                 Add to Calendar
               </Button>
 
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <Box sx={style}>
+             
 
-                    <BuyTicketForm />
+              <ModalDialog user={user} event={eventOne} open={openModal} handleClose={handleCloseModal}/>
 
-                  </Box>
-                </Fade>
-              </Modal>
+                  
             </Box>
 
           </Box>

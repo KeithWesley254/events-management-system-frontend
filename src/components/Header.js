@@ -135,7 +135,7 @@ const Header = ({ logOut }) => {
                     my: 1,
                     display: "block",
                     fontSize: 14,
-                    fontWeight: "bolder",
+                    fontWeight: 600,
                     color: "black",
                   }}
                   textAlign="center"
@@ -156,7 +156,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bolder",
+                      fontWeight: 600,
                       color: "black",
                     }}
                     textAlign="center"
@@ -179,7 +179,7 @@ const Header = ({ logOut }) => {
                     my: 1,
                     display: "block",
                     fontSize: 14,
-                    fontWeight: "bolder",
+                    fontWeight: 600,
                     color: "black",
                   }}
                   textAlign="center"
@@ -199,7 +199,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bolder",
+                      fontWeight: 600,
                       color: "black",
                     }}
                     textAlign="center"
@@ -255,8 +255,8 @@ const Header = ({ logOut }) => {
                 my: 2,
                 textTransform: "none",
                 display: "block",
-                fontSize: 14,
-                fontWeight: "bold",
+                fontSize: 15,
+                fontWeight: 600,
                 color: "black",
               }}
             >
@@ -274,8 +274,8 @@ const Header = ({ logOut }) => {
                     my: 2,
                     textTransform: "none",
                     display: "block",
-                    fontSize: 14,
-                    fontWeight: "bold",
+                    fontSize: 15,
+                    fontWeight: 600,
                     color: "#0724ea",
                   }}
                 >
@@ -294,9 +294,9 @@ const Header = ({ logOut }) => {
               sx={{
                 my: 2,
                 textTransform: "none",
-                display: "block",
-                fontSize: 14,
-                fontWeight: "bold",
+                display: "regular",
+                fontSize: 15,
+                fontWeight: 600,
                 color: "black",
               }}
             >
@@ -313,8 +313,8 @@ const Header = ({ logOut }) => {
                   my: 2,
                   textTransform: "none",
                   display: "block",
-                  fontSize: 14,
-                  fontWeight: "bold",
+                  fontSize: 15,
+                  fontWeight: 600,
                   color: "black",
                 }}
               >
@@ -330,7 +330,7 @@ const Header = ({ logOut }) => {
               {loggedIn ? (
                 <IconButton
                   onClick={handleOpenUserMenu}
-                  sx={{ p: 0, mr: { md: 15 } }}
+                  sx={{ p: 0, mr: { md: 3 } }}
                 >
                   <Avatar />
                 </IconButton>
@@ -370,8 +370,8 @@ const Header = ({ logOut }) => {
                     sx={{
                       my: 1,
                       display: "block",
-                      fontSize: 14,
-                      fontWeight: "bold",
+                      fontSize: 15,
+                      fontWeight: 600,
                       color: "black",
                     }}
                   >
@@ -389,8 +389,8 @@ const Header = ({ logOut }) => {
                     sx={{
                       my: 1,
                       display: "block",
-                      fontSize: 14,
-                      fontWeight: "bold",
+                      fontSize: 15,
+                      fontWeight: 600,
                       color: "black",
                     }}
                     textAlign="center"
@@ -409,7 +409,7 @@ const Header = ({ logOut }) => {
                       my: 1,
                       display: "block",
                       fontSize: 14,
-                      fontWeight: "bold",
+                      fontWeight: 600,
                       color: "black",
                     }}
                   >

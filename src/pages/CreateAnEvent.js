@@ -336,7 +336,7 @@ export default function CreateAnEvent() {
                             </FormControl>
 
                             <Box >
-                              <FormControl sx={{ m: 1, width: "70%"}}>
+                              <FormControl sx={{ m: 1, width: "50%"}}>
                                 <Button
                                 type='submit'
                                 onClick={(e) => {
@@ -345,10 +345,11 @@ export default function CreateAnEvent() {
                                     horizontal: 'center',
                                   })
                                 }}
-                                style={{ 
-                                backgroundColor: "#d1410a", 
-                                color: "#fff",
-                                width: "100%"
+                                sx={{  
+                                  width: "100%",
+                                  height: "50%",
+                                  backgroundColor: "#0724ea",
+                                  color: "#fff",
                                 }}
                                 >
                                   Submit

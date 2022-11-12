@@ -82,7 +82,7 @@ const AboutUs = () => {
                 <Box sx={{display: "flex", justifyContent: "center"}}>
                   <Button
                   sx={{mt: 3, 
-                  backgroundColor: "#d1410a", 
+                  backgroundColor: "#0724ea", 
                   color: "#fff",
                   width: "50%",
                   height: "50%",
@@ -143,7 +143,7 @@ const AboutUs = () => {
                   
                   <Button
                   sx={{mt: 3, 
-                  backgroundColor: "#d1410a", 
+                  backgroundColor: "#0724ea", 
                   color: "#fff",
                   width: "50%",
                   height: "50%",
