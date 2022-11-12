@@ -1,11 +1,13 @@
 import { Grid, Box, Card, CardMedia, Typography, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import { ThemeState } from '../ThemeContext';
 
 const AboutUs = () => {
   const [communityData, setCommunityData] = useState([]);
   const [aboutUsData, setAboutUsData] = useState([]);
   const [randomIndexCommunity, setRandomIndex] = useState();
   const [randomIndexAbout, setRandomIndexAbout] = useState();
+  const { btnColor, mainHeading, textColor, btnTextColor, btnHover } = ThemeState();
 
   useEffect(() => {
     changeCommunityImage()
@@ -44,7 +46,7 @@ const AboutUs = () => {
         <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
             <div style={{
-              display: "flex", color: "#1d0a3c", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
+              display: "flex", color: mainHeading, justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
               }}>
                 <p>
                   About Us
@@ -74,7 +76,7 @@ const AboutUs = () => {
             <Box sx={{ml: 4, mr: 4}}>
               <div>
                 <Box>
-                  <Typography sx={{color: "#707286"}}>
+                  <Typography sx={{color: textColor}}>
                     {aboutUsData[randomIndexAbout]?.about_description}
                   </Typography>
                 </Box>
@@ -82,14 +84,14 @@ const AboutUs = () => {
                 <Box sx={{display: "flex", justifyContent: "center"}}>
                   <Button
                   sx={{mt: 3, 
-                  backgroundColor: "#0724ea", 
-                  color: "#fff",
+                  color: btnTextColor,
+                  backgroundColor: btnColor,
                   width: "50%",
                   height: "50%",
                   borderRadius: 2,
                   ml: {xs: 2, md: 2}, 
                   mr: {xs: 2, md: 2},
-                  "&:hover": {backgroundColor: "black", }
+                  "&:hover": {backgroundColor: btnHover, }
                   }}
                   onClick={changeAboutImage}
                   >
@@ -104,7 +106,7 @@ const AboutUs = () => {
         <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
             <div style={{
-              display: "flex", color: "#1d0a3c", justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
+              display: "flex", color: mainHeading, justifyContent: "center", alignItems: "center", fontSize: 30, fontFamily: "nunito", fontWeight: "bolder"
               }}>
                 <p>
                   Community Impact
@@ -134,7 +136,7 @@ const AboutUs = () => {
             <Box sx={{ml: 4, mr: 4}}>
               <div>
                 <Box>
-                  <Typography sx={{color: "#707286"}}>
+                  <Typography sx={{color: textColor}}>
                     {communityData[randomIndexCommunity]?.community_description}
                   </Typography>
                 </Box>
@@ -143,14 +145,14 @@ const AboutUs = () => {
                   
                   <Button
                   sx={{mt: 3, 
-                  backgroundColor: "#0724ea", 
-                  color: "#fff",
+                  backgroundColor: btnColor, 
+                  color: btnTextColor,
                   width: "50%",
                   height: "50%",
                   borderRadius: 2,
                   ml: {xs: 2, md: 2}, 
                   mr: {xs: 2, md: 2},
-                  "&:hover": {backgroundColor: "black", }
+                  "&:hover": {backgroundColor: btnHover, }
                   }}
                   onClick={changeCommunityImage}
                   >

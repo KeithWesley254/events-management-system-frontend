@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Grid, Backdrop, Modal, Fade, Button, Typography, Divider } from '@mui/material';
+import { Box, Grid, Button, Typography, Divider } from '@mui/material';
 import { loadGapiInsideDOM } from "gapi-script";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -13,9 +13,7 @@ const SpecificEvent = () => {
   const [user, setTheUser] = useState({});
   const [eventOne, setEventOne] = useState({});
   const [gapi, setGapi] = useState();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openModal, setOpenModal] = useState(false)
 
   const params = useParams();
 
@@ -61,20 +59,6 @@ const SpecificEvent = () => {
         setIsLoading(false);
       });
   }, [params]);
-
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    height: "auto",
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const [openModal, setOpenModal] = useState(false)
 
   const handleOpenModal = () => {
     setOpenModal(true)
@@ -350,10 +334,7 @@ const SpecificEvent = () => {
                 Add to Calendar
               </Button>
 
-             
-
               <ModalDialog user={user} event={eventOne} open={openModal} handleClose={handleCloseModal}/>
-
                   
             </Box>
 

@@ -9,9 +9,11 @@ import CreateAnEvent from "./pages/CreateAnEvent";
 import Header from "./components/Header";
 import SpecificCategory from "./pages/SpecificCategory";
 import SpecificEvent from "./pages/SpecificEvent";
+import { ThemeState } from "./ThemeContext";
 
 function App() {
   const [user, setUser] = useState({});
+  const { bgColor } = ThemeState();
 
   function setCurrentUser(currentUser) {
     setUser(currentUser);
@@ -39,7 +41,7 @@ function App() {
   }, []);
 
   return (
-    <div className="overallTop">
+    <div style={{backgroundColor: bgColor}}>
       <Header user={user} logOut={logOut} />
       <main>
         <Routes>

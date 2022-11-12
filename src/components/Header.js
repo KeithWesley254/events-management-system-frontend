@@ -16,6 +16,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
 import { useNavigate } from "react-router-dom";
+import DayNightToggle from 'react-day-and-night-toggle'
+import { ThemeState } from "../ThemeContext";
 
 const Header = ({ logOut }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -23,6 +25,7 @@ const Header = ({ logOut }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setTheUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const { isDarkMode, accent, subTitles, textColor, bgColor, setIsDarkMode } = ThemeState();
 
   React.useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -69,7 +72,7 @@ const Header = ({ logOut }) => {
     return <LinearProgress style={{ backgroundColor: "#d1410a" }} />;
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "#fff" }}>
+    <AppBar position="sticky" sx={{ bgcolor: bgColor }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div className="headerLogo" onClick={() => navigate("/")}>
@@ -77,13 +80,13 @@ const Header = ({ logOut }) => {
               style={{
                 fontWeight: "bolder",
                 fontSize: 14,
-                color: "black",
+                color: textColor,
                 cursor: "pointer",
               }}
             >
               Events
               <br />
-              <span style={{ color: "#d1410a", cursor: "pointer" }}>
+              <span style={{ color: accent, cursor: "pointer" }}>
                 Bomboclat
               </span>
             </p>
@@ -102,10 +105,11 @@ const Header = ({ logOut }) => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              sx={{ color: "black" }}
+              sx={{ color: textColor }}
             >
               <MenuIcon />
             </IconButton>
+            
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -123,6 +127,7 @@ const Header = ({ logOut }) => {
               sx={{
                 display: { xs: "block", md: "none" },
               }}
+              
             >
               <MenuItem
                 onClick={() => {
@@ -215,7 +220,7 @@ const Header = ({ logOut }) => {
           <TheaterComedyIcon
             sx={{
               display: { xs: "flex", md: "none" },
-              color: "#d1410a",
+              color: accent,
               mr: 1,
             }}
           />
@@ -231,15 +236,17 @@ const Header = ({ logOut }) => {
               fontFamily: "nunito",
               fontWeight: 700,
               letterSpacing: ".1rem",
-              color: "black",
+              color: textColor,
               textDecoration: "none",
               flexWrap: "wrap",
+              fontSize: 13
             }}
           >
             Events
             <br />
-            <span style={{ color: "#d1410a" }}>Bomboclat</span>
+            <span style={{ color: accent }}>Bomboclat</span>
           </Typography>
+          
           <Box
             sx={{
               flexGrow: 1,
@@ -257,7 +264,7 @@ const Header = ({ logOut }) => {
                 display: "block",
                 fontSize: 15,
                 fontWeight: 600,
-                color: "black",
+                color: subTitles,
               }}
             >
               Home
@@ -276,7 +283,7 @@ const Header = ({ logOut }) => {
                     display: "block",
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#0724ea",
+                    color: accent,
                   }}
                 >
                   Create An Event
@@ -297,13 +304,14 @@ const Header = ({ logOut }) => {
                 display: "regular",
                 fontSize: 15,
                 fontWeight: 600,
-                color: "black",
+                color: subTitles,
               }}
             >
               About Us
             </Button>
             &nbsp; &nbsp; &nbsp;
             {"error" in user ? (
+              <>
               <Button
                 onClick={() => {
                   handleCloseNavMenu();
@@ -315,17 +323,33 @@ const Header = ({ logOut }) => {
                   display: "block",
                   fontSize: 15,
                   fontWeight: 600,
-                  color: "black",
+                  color: subTitles,
                 }}
               >
                 Log In
               </Button>
+              &nbsp; &nbsp; &nbsp;
+              </>
             ) : (
               " "
             )}
           </Box>
-
+            <Box 
+            sx={{
+              my: 2,
+              textTransform: "none",
+              display: "block",
+              fontSize: 15,
+            }}
+            >
+              <DayNightToggle
+                onChange={() => setIsDarkMode(!isDarkMode)}
+                checked={isDarkMode}
+              />
+            </Box>
+            &nbsp; &nbsp; &nbsp;
           <Box sx={{ flexGrow: 0 }}>
+            
             <Tooltip title="Open settings">
               {loggedIn ? (
                 <IconButton
