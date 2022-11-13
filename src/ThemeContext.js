@@ -19,6 +19,8 @@ export default function CryptoContext({ children }){
     const [formTextC, setFormTextC] = useState("#545563")
     const [formAccent, setFormAccent] = useState("#545563")
     const [formBg, setFormBg] = useState("#fff")
+    const [iconsC, setIconsC] = useState("#0724ea")
+    const [bColor, setBColor] = useState("1px solid #1d1d1d")
 
     useEffect(() => {
         if(isDarkMode === true) {
@@ -37,6 +39,8 @@ export default function CryptoContext({ children }){
             setFormTextC("#fff")
             setFormAccent("#fff")
             setFormBg("#0a1929")
+            setIconsC("#03DAC5")
+            setBColor("1px solid #fff")
         }
         else if(isDarkMode === false) {
             setBgColor("#fff")
@@ -54,6 +58,8 @@ export default function CryptoContext({ children }){
             setFormTextC("#545563")
             setFormAccent("#545563")
             setFormBg("#fff")
+            setIconsC("#0724ea")
+            setBColor("1px solid #1d1d1d")
         };
 
     }, [isDarkMode]);
@@ -66,7 +72,9 @@ export default function CryptoContext({ children }){
                 mainHeading,
                 categoryBtns,
                 cardHover,
+                iconsC,
                 formBg,
+                bColor,
                 formAccent,
                 formTextC,
                 cardBg,

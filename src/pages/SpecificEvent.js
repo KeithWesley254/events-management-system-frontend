@@ -7,6 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import ModalDialog from '../components/ModalDialog';
+import { ThemeState } from "../ThemeContext";
 
 const SpecificEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +15,7 @@ const SpecificEvent = () => {
   const [eventOne, setEventOne] = useState({});
   const [gapi, setGapi] = useState();
   const [openModal, setOpenModal] = useState(false)
+  const { mainHeading, textColor, btnColor, btnHover, btnTextColor, bColor, subTitles, iconsC } = ThemeState();
 
   const params = useParams();
 
@@ -156,7 +158,7 @@ const SpecificEvent = () => {
                 fontWeight: "bolder",
                 fontFamily: "nunito",
                 fontSize: 40,
-                color: "#1d0a3c"
+                color: mainHeading
               }}
             >
               {eventOne.title}
@@ -170,36 +172,36 @@ const SpecificEvent = () => {
 
       <Grid item xs={12} md={6}>
         <Box sx={{ justifyContent: {xs: "center", md: "start"}, textAlign: {xs: "center", md: "start"} }}>
-          <Typography sx={{ ml: 4, color: "#1d0a3c", fontWeight: "bold", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
+          <Typography sx={{ ml: 4, color: mainHeading, fontWeight: "bold", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
             When and Where
           </Typography>
           <br />
 
           <Grid container spacing={2} columns={6}>
             <Grid item xs={2} md={2}>
-              <Typography sx={{ ml: {xs: 4, md: 4}, color: "#1d0a3c", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 20} }} variant="subtitle1">
+              <Typography sx={{ ml: {xs: 4, md: 4}, color: subTitles, fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 20} }} variant="subtitle1">
                 <CalendarMonthIcon sx={{
-                  color: "#0724ea",
+                  color: iconsC,
                 }}/> Date
               </Typography>
 
-              <Typography sx={{ color: "#707286", ml: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
+              <Typography sx={{ color: textColor, ml: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
                 {new Date(eventOne.event_start_date).toUTCString()}
               </Typography>
             </Grid>
 
             <Grid item xs={1} md={1}>
-              <Divider style={{height:'100%'}} orientation="vertical" flexItem />
+              <Divider sx={{height:'100%', borderColor: textColor}} orientation="vertical" flexItem />
             </Grid>
 
             <Grid item xs={2} md={2}>
-              <Typography sx={{ ml: {xs: 4, md: 4}, color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
+              <Typography sx={{ ml: {xs: 4, md: 4}, color: subTitles, fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
                 <LocationOnIcon sx={{
-                  color: "#0724ea",
+                  color: iconsC,
                 }}/> Location
               </Typography>
 
-              <Typography sx={{ color: "#707286", ml: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
+              <Typography sx={{ color: textColor, ml: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
                 {eventOne.location}
               </Typography>
             </Grid>
@@ -211,23 +213,23 @@ const SpecificEvent = () => {
       <Grid item xs={12} md={6}>
         
         <Box sx={{ justifyContent: {xs: "center", md: "center"}, textAlign: {xs: "center", md: "center"} }}>
-          <Typography sx={{fontWeight: "bold", color: "#1d0a3c", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
+          <Typography sx={{fontWeight: "bold", color: mainHeading, fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
             Early Booking End Date
           </Typography>
           <br />
 
           <Box sx={{width: "100%", display: "inline-flex", justifyContent: "center"}}>
-            <Box sx={{border: 1, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
-              <Typography sx={{ fontWeight: "bold", color: "#707286", mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
+            <Box sx={{border: bColor, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
+              <Typography sx={{ fontWeight: "bold", color: textColor, mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
                 {new Date(eventOne.early_booking_end_date).toUTCString()}
               </Typography>
               
               {eventOne.early_timer < 0 ? (
-                <Typography sx={{ fontWeight: "bold", color: "#707286", mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 20, md: 20} }} variant="body1">
+                <Typography sx={{ fontWeight: "bold", color: textColor, mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 20, md: 20} }} variant="body1">
                   Early Booking time has passed
                 </Typography>
                 ) : (
-                  <Typography sx={{ fontWeight: "bold", color: "#707286", mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 20, md: 20} }} variant="body1">
+                  <Typography sx={{ fontWeight: "bold", color: textColor, mt: 3, ml: {md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 20, md: 20} }} variant="body1">
                     <i>{eventOne.early_timer + " days remaining"}</i>
                   </Typography>
               )}
@@ -245,7 +247,7 @@ const SpecificEvent = () => {
         <Grid item xs={12} md={6}>
         <br />
           <Box sx={{ justifyContent: {xs: "center", md: "start"}, textAlign: {xs: "center", md: "start"} }}>
-            <Typography sx={{ ml: 4, color: "#1d0a3c", fontWeight: "bold", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
+            <Typography sx={{ ml: 4, color: mainHeading, fontWeight: "bold", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
               Ticket Prices
             </Typography>
             <br />
@@ -253,17 +255,17 @@ const SpecificEvent = () => {
             <Grid container spacing={2} columns={6}>
               <Grid item xs={2} md={2}>
                 <Box sx={{textAlign: "center"}}>
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: subTitles, fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
                     <ConfirmationNumberIcon sx={{
-                      color: "#0724ea",
+                      color: iconsC,
                     }}/> <i>Early Booking Prices</i>
                   </Typography>
 
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#707286", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: textColor, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
                     <b>Regular Ticket ($):</b> {eventOne.early_booking_price_regular} 
                   </Typography>
 
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#707286", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: textColor, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
                     <b>Vip Ticket ($):</b> {eventOne.early_booking_price_vip}
                   </Typography>
                 </Box>
@@ -271,22 +273,22 @@ const SpecificEvent = () => {
               </Grid>
 
               <Grid item xs={1} md={1}>
-                <Divider style={{height:'100%'}} orientation="vertical" flexItem />
+                <Divider sx={{height:'100%', borderColor: textColor}} orientation="vertical" flexItem />
               </Grid>
 
               <Grid item xs={2} md={2}>
 
                 <Box sx={{textAlign: "center"}}>
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#1d0a3c", fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: subTitles, fontFamily: "nunito", fontWeight: "bold", textAlign: {xs: "center", md: "center"}, fontSize: {xs: 15, md: 20} }} variant="subtitle1">
                     <BookOnlineIcon sx={{
-                    color: "#0724ea",
+                    color: iconsC,
                   }}/> <i>Regular Ticket Prices</i>
                   </Typography>
 
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#707286", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: textColor, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
                     <b>Regular Ticket ($):</b> {eventOne.regular_price}
                   </Typography>
-                  <Typography sx={{ ml: {xs: 4, md: 4}, color: "#707286", textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
+                  <Typography sx={{ ml: {xs: 4, md: 4}, color: textColor, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 15, md: 15} }} variant="body1">
                     <b>Vip Ticket ($):</b> {eventOne.vip_price}
                   </Typography>
                 </Box>
@@ -301,17 +303,17 @@ const SpecificEvent = () => {
           <br />
           <Box sx={{ justifyContent: {xs: "center", md: "center"}, textAlign: {xs: "center", md: "center"} }}>
 
-            <Box sx={{border: 1, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
+            <Box sx={{border: bColor, borderRadius: 2, height: "100px", width: "60%", display: "inline-flex", justifyContent: "center", textAlign: "center"}}>
               <Button
               sx={{mt: 3, 
-              backgroundColor: "#0724ea",
-              color: "#fff",
+              backgroundColor: btnColor,
+              color: btnTextColor,
               width: "50%",
               height: "50%",
               borderRadius: 2,
               ml: {xs: 2, md: 2}, 
               mr: {xs: 2, md: 2},
-              "&:hover": {backgroundColor: "black", }
+              "&:hover": {backgroundColor: btnHover, }
               }}
               onClick={handleBuyTicket}
               >
@@ -320,15 +322,15 @@ const SpecificEvent = () => {
               &nbsp;
               <Button
               sx={{mt: 3, 
-              backgroundColor: "#0724ea",
-              color: "#fff",
-              width: "50%",
-              height: "50%",
-              borderRadius: 2,
-              ml: {xs: 2, md: 2}, 
-              mr: {xs: 2, md: 2},
-              "&:hover": {backgroundColor: "black", }
-              }}
+               backgroundColor: btnColor,
+               color: btnTextColor,
+               width: "50%",
+               height: "50%",
+               borderRadius: 2,
+               ml: {xs: 2, md: 2}, 
+               mr: {xs: 2, md: 2},
+               "&:hover": {backgroundColor: btnHover, }
+               }}
               onClick={handleAdd}
               >
                 Add to Calendar
@@ -348,11 +350,11 @@ const SpecificEvent = () => {
 
         <Box sx={{ justifyContent: {xs: "center", md: "center"}, textAlign: {xs: "center", md: "center"} }}>
 
-          <Typography sx={{ fontWeight: "bold", color: "#1d0a3c", fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
+          <Typography sx={{ fontWeight: "bold", color: mainHeading, fontFamily: "nunito", fontSize: {xs: 25, md: 30},}} variant="h2">
             About this event
           </Typography>
 
-          <Typography sx={{ ml: {xs: 4, md: 4}, color: "#707286", mr: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
+          <Typography sx={{ ml: {xs: 4, md: 4}, color: textColor, mr: {xs: 4, md: 4}, textAlign: {xs: "center", md: "center"}, fontFamily: "nunito", fontSize: {xs: 18, md: 18} }} variant="body1">
             {eventOne.description}
           </Typography>
         </Box>
