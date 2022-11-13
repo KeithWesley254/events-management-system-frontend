@@ -1,6 +1,6 @@
 import { Alert, Box, Button, FormControl, FormHelperText, TextField } from '@mui/material';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ThemeState } from '../ThemeContext';
 
 const LoginForm = ({ setCurrentUser }) => {
@@ -11,6 +11,7 @@ const LoginForm = ({ setCurrentUser }) => {
   const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
 
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +28,7 @@ const LoginForm = ({ setCurrentUser }) => {
         r.json().then((user) => {
           window.localStorage.setItem("token", JSON.stringify(user.jwt));
           setCurrentUser(user.user);
-          navigate('/')
+          navigate(state)
           window.location.reload()
         });
       } else {

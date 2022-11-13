@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Box, FormControl, FormHelperText, TextField, Alert, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ThemeState } from '../ThemeContext';
 
 const SignUpForm = ({ setCurrentUser }) => {
@@ -13,6 +13,7 @@ const SignUpForm = ({ setCurrentUser }) => {
   const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
   
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,7 +35,7 @@ const SignUpForm = ({ setCurrentUser }) => {
         r.json().then((user) => {
           window.localStorage.setItem("token", JSON.stringify(user.jwt));
           setCurrentUser(user.user);
-          navigate('/')
+          navigate(state)
           window.location.reload()
         });
       } else {

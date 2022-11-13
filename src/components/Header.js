@@ -15,7 +15,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DayNightToggle from 'react-day-and-night-toggle'
 import { ThemeState } from "../ThemeContext";
 
@@ -67,6 +67,7 @@ const Header = ({ logOut }) => {
   };
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   if (isLoading === true)
     return <LinearProgress style={{ backgroundColor: "#d1410a" }} />;
@@ -196,7 +197,7 @@ const Header = ({ logOut }) => {
                 <MenuItem
                   onClick={() => {
                     handleCloseNavMenu();
-                    navigate("/login");
+                    navigate("/login", { state: location.pathname });
                   }}
                 >
                   <Typography
@@ -315,7 +316,7 @@ const Header = ({ logOut }) => {
               <Button
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate("/login");
+                  navigate("/login", { state: location.pathname });
                 }}
                 sx={{
                   my: 2,
@@ -406,7 +407,7 @@ const Header = ({ logOut }) => {
                 <MenuItem
                   onClick={() => {
                     handleCloseNavMenu();
-                    navigate("/login");
+                    navigate("/login", { state: location.pathname });
                   }}
                 >
                   <Typography

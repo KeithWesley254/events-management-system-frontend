@@ -4,18 +4,28 @@ import Carousel from "react-material-ui-carousel";
 import Categories from '../components/Categories';
 import HomePageEvents from '../components/HomePageEvents';
 import { ThemeState } from "../ThemeContext";
+import mainBanner from '../assets/banners/main banner.png';
+import progamer from '../assets/banners/progamer banner.png';
+import natureBanner from '../assets/banners/nature banner.png';
+import techBanner from '../assets/banners/tech banner.png';
+import fitnessBanner from '../assets/banners/fitness banner.png';
 
 const Hero = () => {
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [homeBanners, setHomeBanners] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { mainHeading } = ThemeState();
+  const banners = [
+    {id: 1, img_url: mainBanner, title: "main banner"},
+    {id: 2, img_url: progamer, title: "pro gamer"},
+    {id: 3, img_url: natureBanner, title: "nature banner"},
+    {id: 4, img_url: techBanner, title: "tech banner"},
+    {id: 5, img_url: fitnessBanner, title: "fitness banner"}
+  ]
 
   useEffect(() => {
     fetch("http://localhost:3000/api/events").then(r => r.json()).then(data => setEvents(data));
     fetch("http://localhost:3000/api/categories").then(r => r.json()).then(data => setCategories(data));
-    fetch("http://localhost:3000/api/home_banners").then(r => r.json()).then(data => setHomeBanners(data));
     setIsLoading(false)
   }, []);
 
@@ -34,16 +44,16 @@ const Hero = () => {
               indicators={false}
               swipe={true}
             >
-                {(Array.isArray(homeBanners) ? homeBanners : []).map((banner) => {
+                {(Array.isArray(banners) ? banners : []).map((banner) => {
                   return(
                     <div key={banner.id}>
                       <img 
-                        src={banner.image_url}
+                        src={banner.img_url}
                         alt={banner.title}
                         style={{
                           width: "100%",
                           height: "auto",
-                          maxHeight: "405px",
+                          maxHeight: "600px",
                         }}
                       />
                     </div>

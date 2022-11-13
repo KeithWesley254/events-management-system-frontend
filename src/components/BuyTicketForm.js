@@ -1,12 +1,15 @@
-import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, OutlinedInput, Stack, TextField, Typography } from '@mui/material';
+import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, OutlinedInput, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+import { ThemeState } from "../ThemeContext";
 
 const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   const [vipTickets, setVipTickets] = useState(0);
   const [regularTickets, setRegularTickets] = useState(0);
   const [mobileNumber, setPhoneNumber] = useState("");
+
+  const { mainHeading, bgColor, formAccent, formTextC, accent, textColor, btnColor, btnHover, btnTextColor, bColor, subTitles, iconsC } = ThemeState();
   
   let currentDate = new Date().getTime();
   let totalAmount = 0;
@@ -60,9 +63,9 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   }
 
   return (
-    <>
-      <DialogTitle>
-        {event.title} | {event.location} | <span style={{color: "#d1410a", fontWeight: 600}}>Pay with Mpesa</span>
+    <Box sx={{bgcolor: bgColor}}>
+      <DialogTitle sx={{color: mainHeading}}>
+        {event.title} | {event.location} | <span style={{color: accent, fontWeight: 600}}>Pay with Mpesa</span>
       </DialogTitle>
       <Divider />
       
@@ -70,13 +73,13 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
 
         <DialogContent>
 
-          <DialogContentText>
-            <InputLabel><b>Ticket No:</b> {eventTicket}</InputLabel>
+          <DialogContentText >
+            <InputLabel sx={{color: textColor}}><b>Ticket No:</b> {eventTicket}</InputLabel>
           </DialogContentText>
           <br />
 
           <DialogContentText>
-            <InputLabel><b>Vip Tickets Remaining:</b> {event.vip_no_of_tickets - vipTicketCount}</InputLabel>
+            <InputLabel sx={{color: textColor}}><b>Vip Tickets Remaining:</b> {event.vip_no_of_tickets - vipTicketCount}</InputLabel>
           </DialogContentText>
 
           <TextField
@@ -87,14 +90,14 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
             placeholder="Book vip seat"
             type="number"
             min="0"
-            sx={{mb: 2}}
+            sx={{ mb: 2, input: { color: formAccent }, "label": {color: formTextC} }}
             fullWidth
             variant="standard"
             onChange={(event) => setVipTickets(event.target.value)}
           />
 
-          <DialogContentText>
-            <InputLabel><b>Regular Tickets Remaining:</b> {event.regular_no_of_tickets - regularTicketCount}</InputLabel>
+          <DialogContentText sx={{color: textColor}}>
+            <InputLabel sx={{color: textColor}}><b>Regular Tickets Remaining:</b> {event.regular_no_of_tickets - regularTicketCount}</InputLabel>
           </DialogContentText>
 
           <TextField
@@ -105,14 +108,14 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
             placeholder="Book regular seat"
             type="number"
             min="0"
-            sx={{mb: 2}}
+            sx={{ mb: 2, input: { color: formAccent }, "label": {color: formTextC} }}
             fullWidth
             variant="standard"
             onChange={(event) => setRegularTickets(event.target.value)}
           />
 
-          <DialogContentText>
-            <InputLabel><b>Mpesa Mobile Number</b></InputLabel>
+          <DialogContentText >
+            <InputLabel sx={{color: textColor}}><b>Mpesa Mobile Number</b></InputLabel>
           </DialogContentText>
           
           <PhoneInput
@@ -124,13 +127,14 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
           />
 
           <DialogContentText>
-            <InputLabel><b>Total Amount</b></InputLabel>
+            <InputLabel sx={{color: textColor}}><b>Total Amount</b></InputLabel>
           </DialogContentText>
 
           <OutlinedInput 
           type="number"
           min="0"
-          sx={{mb: 2, width: "60%"}}
+          
+          sx={{mb: 2, width: "60%", input: { color: formAccent } }}
           value={totalAmount}
           />
 
@@ -139,12 +143,13 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
         <Divider />
 
         <DialogActions>
-          <Button sx={{
+          <Button 
+          sx={{
             mt: 3, 
-            backgroundColor: "#0724ea", 
-            color: "#fff",
-            "&:hover": {backgroundColor: "black", }
-            }} 
+            backgroundColor: btnColor,
+            color: btnTextColor,
+            "&:hover": {backgroundColor: btnHover, }
+          }} 
           onClick={handleCloseModal}
           >
             Cancel
@@ -152,9 +157,9 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
           <Button 
           sx={{
             mt: 3, 
-            backgroundColor: "#0724ea",
-            color: "#fff",
-            "&:hover": {backgroundColor: "black", }
+            backgroundColor: btnColor,
+            color: btnTextColor,
+            "&:hover": {backgroundColor: btnHover, }
           }} 
           onClick={(e) => {
             handleCloseModal();
@@ -166,7 +171,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
         </DialogActions>
 
       </form>
-    </>
+    </Box>
   )
 }
 

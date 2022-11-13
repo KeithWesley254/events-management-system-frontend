@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Grid, Button, Typography, Divider } from '@mui/material';
 import { loadGapiInsideDOM } from "gapi-script";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -112,10 +112,11 @@ const SpecificEvent = () => {
     });
   };
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleBuyTicket() {
     if ("error" in user){
-      navigate("/login")
+      navigate("/login", { state: location.pathname })
     }else{
       handleOpenModal()
     }

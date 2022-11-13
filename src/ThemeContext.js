@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const Theme = createContext()
 
 export default function CryptoContext({ children }){
-    const [isDarkMode, setIsDarkMode] = useState(false)
+    const [isDarkMode, setIsDarkMode] = useState(true)
     const [bgColor, setBgColor] = useState("#fff")
     const [btnColor, setBtnColor] = useState("#0724ea")
     const [btnTextColor, setBtnTextColor] = useState("#fff")
