@@ -10,7 +10,7 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const { user, errors, loggedIn, isLoading, handleSubmitSignUp} = UserState();
+  const { errors, isLoading, handleSubmitSignUp} = UserState();
   const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
   
   const { state } = useLocation();

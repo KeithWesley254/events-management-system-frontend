@@ -8,8 +8,9 @@ export default function UserContext({ children }){
     const [errors, setErrors] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [userFullName, setUserName] = useState('');
     const [userImage, setUserImage] = useState('');
+    const [userProfile, setUserProfile] = useState({});
+    const [userFullName, setUserFullName] = useState(''); 
 
     const navigate = useNavigate();
 
@@ -24,13 +25,24 @@ export default function UserContext({ children }){
         },
         body: JSON.stringify({ token }),
       })
-        .then((r) => r.json())
-        .then((user) => {
-          setUser(user)
-          setUserImage(user.user.user_profile.image_upload);
-          setUserName(user.user.user_profile.full_name);
-        });
-    }, [loggedIn]);
+      .then((r) => r.json())
+      .then((user) => {
+        setUser(user)
+        setUserImage(user.user.user_profile.image_upload);
+        setUserFullName(user.user.user_profile.full_name);
+      });
+
+      if(user.user_profile){
+        fetch(`http://localhost:3000/api/user_profiles/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        })
+        .then(r => r.json())
+        .then(data => setUserProfile(data))
+      }
+
+    }, [navigate, loggedIn]);
 
     function handleSubmitSignUp(e, data, state) {
         e.preventDefault();
@@ -49,7 +61,7 @@ export default function UserContext({ children }){
               window.localStorage.setItem("token", JSON.stringify(user.jwt));
               setUser(user.user);
               setUserImage(user.user.user_profile.image_upload);
-              setUserName(user.user.user_profile.full_name);
+              setUserFullName(user.user.user_profile.full_name);
               setLoggedIn(true);
               navigate(state)
             });
@@ -75,7 +87,7 @@ export default function UserContext({ children }){
             window.localStorage.setItem("token", JSON.stringify(user.jwt));
             setUser(user.user);
             setUserImage(user.user.user_profile.image_upload);
-            setUserName(user.user.user_profile.full_name);
+            setUserFullName(user.user.user_profile.full_name);
             setLoggedIn(true);
             navigate(state)
             });
@@ -102,6 +114,7 @@ export default function UserContext({ children }){
                 loggedIn,
                 isLoading,
                 userImage,
+                userProfile,
                 userFullName,
                 handleSubmitLogin,
                 handleSubmitSignUp
