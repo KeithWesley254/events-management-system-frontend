@@ -1,12 +1,14 @@
-import { Alert, Box, FormControl, FormHelperText, TextField } from '@mui/material';
+import { Alert, Box, Button, FormControl, FormHelperText, TextField } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ThemeState } from '../ThemeContext';
 
 const LoginForm = ({ setCurrentUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
 
   const navigate = useNavigate();
 
@@ -39,9 +41,13 @@ const LoginForm = ({ setCurrentUser }) => {
       <Box>
         <main>
         <form onSubmit = {handleSubmit}>
-          <p style={{fontWeight: "bolder", fontSize: 60}}>Login</p>
-          <p style={{fontWeight: "bold", color: "#545563", fontSize: 14}}>Sign in with the data you entered during your registration</p>
-          <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}>
+          <p style={{fontWeight: "bolder", color: mainHeading, fontSize: 60}}>Login</p>
+          <p style={{fontWeight: "bold", color: subTitles, fontSize: 14}}>Sign in with the data you entered during your registration</p>
+          <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },
+          '& fieldset.MuiOutlinedInput-notchedOutline': {
+            borderColor: formAccent,
+           }, color: formTextC
+          }}>
           
             <div>
               
@@ -53,9 +59,10 @@ const LoginForm = ({ setCurrentUser }) => {
                 id="email"
                 autoComplete="on"
                 value={email}
+                sx={{ input: { color: formAccent }, "label": {color: formTextC} }}
                 onChange={(e) => setEmail(e.target.value)} 
                 />
-                <FormHelperText id="my-helper-text">name@example.com</FormHelperText>
+                <FormHelperText sx={{color: formTextC}} id="my-helper-text">name@example.com</FormHelperText>
               </FormControl>
               <br />
               <FormControl>
@@ -65,9 +72,10 @@ const LoginForm = ({ setCurrentUser }) => {
                 id="password"
                 autoComplete="current-password"
                 value={password}
+                sx={{ input: { color: formAccent }, "label": {color: formTextC} }}
                 onChange={(e) => setPassword(e.target.value)}
                 />
-                <FormHelperText id="my-helper-text">min. 8 characters</FormHelperText>
+                <FormHelperText sx={{color: formTextC}} id="my-helper-text">min. 8 characters</FormHelperText>
               </FormControl>
             </div>
           </Box>
@@ -75,21 +83,19 @@ const LoginForm = ({ setCurrentUser }) => {
           <br />
           <br />
           <div>
-            <FormControl>
-              <button style={{
-                fontSize: 14,
-                backgroundColor: "#0724ea", 
-                width: 255,
-                height: 40,
-                color: "#fff",
-                borderRadius: 10,
-                cursor: "pointer",
-                border: "none"
+            <FormControl sx={{width: "50%"}}>
+              <Button 
+              sx={{ 
+                width: "100%",
+                height: "50%",
+                backgroundColor: btnColor,
+                color: btnTextColor,
+                "&:hover": {backgroundColor: btnHover, }
               }}
               type="submit"
               >
                 {isLoading ? "Loading..." : "Login"}
-              </button>
+              </Button>
               <br />
             </FormControl>  
             <div>

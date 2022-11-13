@@ -46,7 +46,7 @@ export default function CreateAnEvent() {
     image_url2: ''
   });
 
-  const { formBg, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
+  const { formBg, btnHover, btnColor, btnTextColor, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/categories`)
@@ -301,8 +301,9 @@ export default function CreateAnEvent() {
                                   sx={{  
                                     width: "100%",
                                     height: "50%",
-                                    backgroundColor: "#0724ea",
-                                    color: "#fff",
+                                    backgroundColor: btnColor,
+                                    color: btnTextColor,
+                                    "&:hover": {backgroundColor: btnHover, }
                                   }}
                                   >
                                     Submit
@@ -315,23 +316,32 @@ export default function CreateAnEvent() {
                   </form>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Button
-                      color="inherit"
-                      disabled={activeStep === 0}
                       onClick={handleBack}
                       sx={{ 
-                        width: "40%",
+                        width: "20%",
                         height: "50%",
-                        my: 2
+                        mr: 4,
+                        ml: 4,
+                        my: 3,
+                        backgroundColor: btnColor,
+                        color: btnTextColor,
+                        "&:hover": {backgroundColor: btnHover, }
                       }}
                     >
                       Back
                     </Button>
                     
                     <Button onClick={handleNext} 
+                    variant="outlined"
                       sx={{ 
-                        width: "40%",
+                        width: "20%",
                         height: "50%",
-                        my: 2
+                        mr: 4,
+                        ml: 4,
+                        my: 3,
+                        backgroundColor: btnColor,
+                        color: btnTextColor,
+                        "&:hover": {backgroundColor: btnHover, }
                       }}>
                       Next
                     </Button>

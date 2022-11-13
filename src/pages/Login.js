@@ -3,11 +3,13 @@ import { Grid, Box, Button } from '@mui/material';
 import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import Carousel from "react-material-ui-carousel";
+import { ThemeState } from '../ThemeContext';
 
 const Login = ({ setCurrentUser }) => {
 
   const [showLogin, setShowLogin] = useState(true);
   const [loginSlides, setLoginSlides] = useState([]);
+  const { accent, formTextC, } = ThemeState();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/login_slides")
@@ -22,7 +24,7 @@ const Login = ({ setCurrentUser }) => {
       <main>
         <Box >
           <Grid container spacing={2} columns={12}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sx={{color: formTextC}} md={6}>
 
               {showLogin ? (
                 <>
@@ -32,7 +34,7 @@ const Login = ({ setCurrentUser }) => {
                 <div className='loginForm'>
                   <p>
                     Don't have an account? &nbsp;
-                    <Button sx={{bgcolor: "transparent", color: "#d1410a", fontFamily: "Nunito", fontWeight: "bold", fontSize: 14, textTransform: "none" }} onClick={() => setShowLogin(false)}>
+                    <Button disableRipple sx={{bgcolor: "transparent", color: accent, "&:hover": {backgroundColor: "transparent"}, fontFamily: "nunito", fontWeight: "bold", fontSize: 14, textTransform: "none" }} onClick={() => setShowLogin(false)}>
                       Sign Up
                     </Button>
                   </p>
@@ -47,7 +49,7 @@ const Login = ({ setCurrentUser }) => {
                 <div className='loginForm'>
                   <p>
                     Already have an account? &nbsp;
-                    <Button sx={{bgcolor: "transparent", color: "#d1410a", fontFamily: "Nunito", fontWeight: "bold", fontSize: 14, textTransform: "none" }} onClick={() => setShowLogin(true)}>
+                    <Button disableRipple sx={{bgcolor: "transparent", "&:hover": {backgroundColor: "transparent"}, color: accent, fontFamily: "nunito", fontWeight: "bold", fontSize: 14, textTransform: "none" }} onClick={() => setShowLogin(true)}>
                       Log In
                     </Button>
                   </p>
