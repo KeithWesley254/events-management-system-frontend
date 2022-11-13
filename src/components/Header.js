@@ -1,53 +1,21 @@
 import * as React from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
-  Button,
-  Tooltip,
-  MenuItem,
-  LinearProgress,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, LinearProgress } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import DayNightToggle from 'react-day-and-night-toggle'
 import { ThemeState } from "../ThemeContext";
+import { UserState } from "../UserContext";
 
-const Header = ({ logOut }) => {
+const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [user, setTheUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const { user, logOut, loggedIn, isLoading } = UserState();
   const { isDarkMode, accent, subTitles, textColor, bgColor, setIsDarkMode } = ThemeState();
-
-  React.useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-
-    fetch("http://localhost:3000/auto_login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    })
-      .then((r) => r.json())
-      .then((user) => {
-        setTheUser(user);
-        setLoggedIn(true);
-        setIsLoading(false);
-      });
-  }, []);
   
   function handleLogoutClick() {
-    setTheUser({});
     logOut();
   }
 
@@ -66,7 +34,6 @@ const Header = ({ logOut }) => {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   if (isLoading === true)

@@ -5,7 +5,7 @@ import SignUpForm from '../components/SignUpForm';
 import Carousel from "react-material-ui-carousel";
 import { ThemeState } from '../ThemeContext';
 
-const Login = ({ setCurrentUser }) => {
+const Login = () => {
 
   const [showLogin, setShowLogin] = useState(true);
   const [loginSlides, setLoginSlides] = useState([]);
@@ -29,7 +29,7 @@ const Login = ({ setCurrentUser }) => {
               {showLogin ? (
                 <>
                 <div className='loginForm'>
-                  <LoginForm setCurrentUser={setCurrentUser} />
+                  <LoginForm />
                 </div>
                 <div className='loginForm'>
                   <p>
@@ -43,7 +43,7 @@ const Login = ({ setCurrentUser }) => {
               ): (
                 <>
                 <div className='loginForm'>
-                  <SignUpForm setCurrentUser={setCurrentUser} />
+                  <SignUpForm />
                 </div>
                
                 <div className='loginForm'>

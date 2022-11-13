@@ -1,47 +1,27 @@
 import React, { useState } from 'react';
 import { Grid, Box, FormControl, FormHelperText, TextField, Alert, Button } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ThemeState } from '../ThemeContext';
+import { UserState } from '../UserContext';
 
-const SignUpForm = ({ setCurrentUser }) => {
+const SignUpForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { user, errors, loggedIn, isLoading, handleSubmitSignUp} = UserState();
   const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
   
-  const navigate = useNavigate();
   const { state } = useLocation();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setErrors([]);
-    setIsLoading(true);
-    fetch("http://localhost:3000/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-      }),
-    }).then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => {
-          window.localStorage.setItem("token", JSON.stringify(user.jwt));
-          setCurrentUser(user.user);
-          navigate(state)
-          window.location.reload()
-        });
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-      }
-    });
+  function handleSubmit(e){
+    const data = {
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    }
+    handleSubmitSignUp(e, data, state)
   }
 
   return (

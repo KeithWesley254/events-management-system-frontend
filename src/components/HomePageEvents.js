@@ -37,7 +37,7 @@ const HomePageEvents = ({ events }) => {
           }, color: formTextC
           }}>
             <TextField 
-            label="Go back to the first page for a full search..."
+            label="First page full search..."
             sx={{ input: { color: formAccent }, "label": {color: formTextC}, mb: 2, width: "70%", borderRadius: 20 }}
             onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
             />

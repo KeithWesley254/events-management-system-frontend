@@ -8,13 +8,15 @@ import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import ModalDialog from '../components/ModalDialog';
 import { ThemeState } from "../ThemeContext";
+import { UserState } from '../UserContext';
 
 const SpecificEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setTheUser] = useState({});
   const [eventOne, setEventOne] = useState({});
   const [gapi, setGapi] = useState();
   const [openModal, setOpenModal] = useState(false)
+
+  const { user } = UserState();
   const { mainHeading, textColor, btnColor, btnHover, btnTextColor, bColor, subTitles, iconsC } = ThemeState();
 
   const params = useParams();
@@ -34,24 +36,6 @@ const SpecificEvent = () => {
     const gapi = await loadGapiInsideDOM();
     setGapi(gapi);
   };
-
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-
-    fetch("http://localhost:3000/auto_login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    })
-      .then((r) => r.json())
-      .then((user) => {
-        setTheUser(user);
-        setIsLoading(false);
-      });
-  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/events/${params.id}`)

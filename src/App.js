@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Hero from "./pages/Hero";
@@ -10,39 +10,15 @@ import Header from "./components/Header";
 import SpecificCategory from "./pages/SpecificCategory";
 import SpecificEvent from "./pages/SpecificEvent";
 import { ThemeState } from "./ThemeContext";
+import { UserState } from "./UserContext";
 
 function App() {
-  const [user, setUser] = useState({});
   const { bgColor } = ThemeState();
-
-  function setCurrentUser(currentUser) {
-    setUser(currentUser);
-  }
-
-  function logOut() {
-    setUser({});
-    localStorage.clear();
-    window.location.reload();
-  }
-
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-
-    fetch("http://localhost:3000/auto_login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    })
-      .then((r) => r.json())
-      .then((user) => setCurrentUser(user));
-  }, []);
+  const { user } = UserState();
 
   return (
     <div style={{backgroundColor: bgColor}}>
-      <Header user={user} logOut={logOut} />
+      <Header />
       <main>
         <Routes>
           <Route exact="true" path="/" element={<Hero />} />
@@ -50,7 +26,7 @@ function App() {
             <Route
               exact="true"
               path="/login"
-              element={<Login setCurrentUser={setCurrentUser} />}
+              element={<Login />}
             />
           ) : (
             " "
@@ -58,7 +34,7 @@ function App() {
 
           <Route
             path="/create-an-event"
-            element={<CreateAnEvent setCurrentUser={setCurrentUser} />}
+            element={<CreateAnEvent />}
           />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/specific-category/:id" element={<SpecificCategory />} />
@@ -66,7 +42,7 @@ function App() {
           <Route
             path="/user-profiles/:id"
             element={
-              <UserProfile user={user} setCurrentUser={setCurrentUser} />
+              <UserProfile />
             }
           />
         </Routes>

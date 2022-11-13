@@ -1,40 +1,24 @@
 import { Alert, Box, Button, FormControl, FormHelperText, TextField } from '@mui/material';
 import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ThemeState } from '../ThemeContext';
+import { UserState } from '../UserContext';
 
-const LoginForm = ({ setCurrentUser }) => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { errors, isLoading, handleSubmitLogin} = UserState();
   const { btnHover, btnColor, subTitles, btnTextColor, mainHeading, formAccent, formTextC, } = ThemeState();
 
-  const navigate = useNavigate();
   const { state } = useLocation();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    fetch('http://localhost:3000/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    }).then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => {
-          window.localStorage.setItem("token", JSON.stringify(user.jwt));
-          setCurrentUser(user.user);
-          navigate(state)
-          window.location.reload()
-        });
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-      }
-    });
+  function handleSubmit(e){
+    const data = {
+      email,
+      password
+    }
+    handleSubmitLogin(e, data, state)
   }
 
   return (

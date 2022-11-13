@@ -1,4 +1,4 @@
-import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, Grid, InputLabel, OutlinedInput, Stack, TextField, Typography } from '@mui/material';
+import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -9,7 +9,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   const [regularTickets, setRegularTickets] = useState(0);
   const [mobileNumber, setPhoneNumber] = useState("");
 
-  const { mainHeading, bgColor, formAccent, formTextC, accent, textColor, btnColor, btnHover, btnTextColor, bColor, subTitles, iconsC } = ThemeState();
+  const { mainHeading, bgColor, formAccent, formTextC, accent, textColor, btnColor, btnHover, btnTextColor } = ThemeState();
   
   let currentDate = new Date().getTime();
   let totalAmount = 0;
