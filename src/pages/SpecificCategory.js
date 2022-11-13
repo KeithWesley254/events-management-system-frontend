@@ -1,4 +1,4 @@
-import { CardMedia, Grid, Typography, Card, CardContent, Box } from '@mui/material';
+import { CardMedia, Grid, Typography, Card, CardContent, Box, TextField, Pagination } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ThemeState } from "../ThemeContext";
@@ -6,11 +6,20 @@ import { ThemeState } from "../ThemeContext";
 const SpecificCategory = () => {
   const [categoryData, setCategoryData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { cardBg, accent, categoryBtns, cardHover } = ThemeState();
+  const [eventPage, setEventPage] = useState(1);
+  const [search, setSearch] = useState("");
+  
+  const { cardBg, accent, formAccent, formTextC, categoryBtns, cardHover } = ThemeState();
 
   const params = useParams();
 
   const navigate = useNavigate();
+
+  function handleSearch(){
+    return filteredDates.filter((event) => 
+        event.title.toLowerCase().includes(search)
+    )
+  }
 
   useEffect(()=>{
   fetch(`http://localhost:3000/api/categories/${params.id}`)
@@ -32,6 +41,9 @@ const SpecificCategory = () => {
       </Grid>
     </Grid>
   )
+
+  const filteredDates = categoryData?.events.filter((event) => parseInt(event.time_diff) > 0);
+
   return (
     <main>
       <Grid container columns={12}>
@@ -71,12 +83,31 @@ const SpecificCategory = () => {
 
       <Grid container spacing={2} columns={12}>
         <Grid item xs={12} md={12}>
+          <Box sx={{ display: "flex", justifyContent: "center",
+          '& fieldset.MuiOutlinedInput-notchedOutline': {
+            borderColor: formAccent,
+          }, color: formTextC
+          }}>
+            <TextField 
+            label="Go back to the first page for a full search..."
+            sx={{ input: { color: formAccent }, "label": {color: formTextC}, m: 2, width: "70%", borderRadius: 20 }}
+            onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={12} md={12}>
           <br />
           <Box sx={{ borderRadius: 20, display: "inline-flex", position: "relative", width: "100%", justifyContent: "center", flexDirection: 'row'  }}>
             <div style={{ marginRight: 10, marginLeft: 10, borderRadius: 20, gap: 20, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row' }}>
             {categoryData.events ?
             (
-              categoryData.events.map((event) => {
+              handleSearch()
+              .slice((eventPage - 1) * 8, (eventPage - 1) * 8 + 8)
+              .sort((a, b) => new Date(a.event_start_date) - new Date(b.event_start_date))
+              .map((event) => {
 
                 return (
                   
@@ -145,6 +176,27 @@ const SpecificCategory = () => {
             </div>
           </Box>
         </Grid>
+
+        <Grid item xs={12} md={12}>
+          <Box >
+            <Pagination 
+            sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                mb: 2,
+                "& .MuiPaginationItem-root": {
+                  color: accent
+                }
+            }}
+            count={(handleSearch().length/8).toFixed(0)}
+            onChange={(_, value) => {
+                setEventPage(value);
+            }}
+            />
+          </Box>
+      </Grid>
+
       </Grid>
     </main>
   )

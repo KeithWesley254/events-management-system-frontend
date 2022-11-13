@@ -1,12 +1,20 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
-import React from "react";
+import { Box, Card, CardContent, CardMedia, Grid, Pagination, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeState } from "../ThemeContext";
 
 const HomePageEvents = ({ events }) => {
   const filteredDates = events.filter((event) => parseInt(event.time_diff) > 0);
+  const [eventPage, setEventPage] = useState(1);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const { cardBg, accent, categoryBtns, cardHover } = ThemeState();
+  const { cardBg, formAccent, formTextC, accent, categoryBtns, cardHover } = ThemeState();
+
+  function handleSearch(){
+    return filteredDates.filter((event) => 
+        event.title.toLowerCase().includes(search)
+    )
+  }
 
   return (
     <div
@@ -21,7 +29,26 @@ const HomePageEvents = ({ events }) => {
         flexDirection: "row",
       }}
     >
-      {filteredDates.map((event) => {
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={12} md={12}>
+          <Box sx={{ display: "flex", justifyContent: "center",
+          '& fieldset.MuiOutlinedInput-notchedOutline': {
+            borderColor: formAccent,
+          }, color: formTextC
+          }}>
+            <TextField 
+            label="Go back to the first page for a full search..."
+            sx={{ input: { color: formAccent }, "label": {color: formTextC}, mb: 2, width: "70%", borderRadius: 20 }}
+            onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+
+      {handleSearch()
+      .slice((eventPage - 1) * 8, (eventPage - 1) * 8 + 8)
+      .sort((a, b) => new Date(a.event_start_date) - new Date(b.event_start_date))
+      .map((event) => {
         return (
           <div key={event.id}>
             <Card
@@ -74,6 +101,26 @@ const HomePageEvents = ({ events }) => {
           </div>
         );
       })}
+
+      <Grid item xs={12} md={12}>
+        <Box >
+          <Pagination 
+          sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              mb: 2,
+              "& .MuiPaginationItem-root": {
+                color: accent
+              }
+          }}
+          count={(handleSearch().length/8).toFixed(0)}
+          onChange={(_, value) => {
+              setEventPage(value);
+          }}
+          />
+        </Box>
+      </Grid>
     </div>
   );
 };
