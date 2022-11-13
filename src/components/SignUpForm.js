@@ -98,11 +98,11 @@ const SignUpForm = () => {
                 </FormControl>
                 <div>
                   {errors.map((err) => (
-                  <>
+                  <div key={err}>
                       <Alert severity="error" sx={{ width: '100%' }}>
                         {err}
                       </Alert>
-                  </>
+                  </div>
                   ))}
                 </div>
               </div>

@@ -189,7 +189,7 @@ const SpecificCategory = () => {
                   color: accent
                 }
             }}
-            count={(handleSearch().length/8).toFixed(0)}
+            count={parseInt( (handleSearch().length/8).toFixed(0) )}
             onChange={(_, value) => {
                 setEventPage(value);
             }}

@@ -85,11 +85,11 @@ const LoginForm = () => {
             </FormControl>  
             <div>
               {errors.map((err) => (
-              <>
+              <div key={err}>
                 <Alert key={err} severity="error" sx={{ width: '100%' }}>
                   {err}
                 </Alert>
-              </>
+              </div>
               ))}
             </div>       
           </div>

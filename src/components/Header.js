@@ -3,7 +3,7 @@ import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar, Button, Tool
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DayNightToggle from 'react-day-and-night-toggle'
 import { ThemeState } from "../ThemeContext";
 import { UserState } from "../UserContext";
@@ -12,8 +12,10 @@ const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { user, logOut, loggedIn, isLoading } = UserState();
+  const { user, logOut, userFullName, userImage, isLoading } = UserState();
   const { isDarkMode, accent, subTitles, textColor, bgColor, setIsDarkMode } = ThemeState();
+
+  const navigate = useNavigate();
   
   function handleLogoutClick() {
     logOut();
@@ -319,24 +321,17 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             
             <Tooltip title="Open settings">
-              {loggedIn ? (
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0, mr: { md: 3 } }}
-                >
-                  <Avatar />
-                </IconButton>
-              ) : (
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0, mr: { md: 15 } }}
-                >
-                  <Avatar
-                    alt={user?.user_profile.full_name}
-                    src={user?.user_profile.image_upload}
-                  />
-                </IconButton>
-              )}
+              
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, mr: { md: 15 } }}
+              >
+                <Avatar
+                  alt={userFullName || ""}
+                  src={userImage || ""}
+                />
+              </IconButton>
+             
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

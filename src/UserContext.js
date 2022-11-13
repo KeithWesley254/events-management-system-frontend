@@ -8,8 +8,29 @@ export default function UserContext({ children }){
     const [errors, setErrors] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [userFullName, setUserName] = useState('');
+    const [userImage, setUserImage] = useState('');
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const token = JSON.parse(localStorage.getItem("token"));
+  
+      fetch("http://localhost:3000/auto_login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then((r) => r.json())
+        .then((user) => {
+          setUser(user)
+          setUserImage(user.user.user_profile.image_upload);
+          setUserName(user.user.user_profile.full_name);
+        });
+    }, [loggedIn]);
 
     function handleSubmitSignUp(e, data, state) {
         e.preventDefault();
@@ -27,6 +48,8 @@ export default function UserContext({ children }){
             r.json().then((user) => {
               window.localStorage.setItem("token", JSON.stringify(user.jwt));
               setUser(user.user);
+              setUserImage(user.user.user_profile.image_upload);
+              setUserName(user.user.user_profile.full_name);
               setLoggedIn(true);
               navigate(state)
             });
@@ -51,6 +74,9 @@ export default function UserContext({ children }){
             r.json().then((user) => {
             window.localStorage.setItem("token", JSON.stringify(user.jwt));
             setUser(user.user);
+            setUserImage(user.user.user_profile.image_upload);
+            setUserName(user.user.user_profile.full_name);
+            setLoggedIn(true);
             navigate(state)
             });
         } else {
@@ -58,24 +84,10 @@ export default function UserContext({ children }){
         }
         });
     }
-
-    useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("token"));
-    
-        fetch("http://localhost:3000/auto_login", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        })
-          .then((r) => r.json())
-          .then((user) => setUser(user));
-    }, [user]);
     
     function logOut() {
       setUser({});
+      setLoggedIn(false);
       localStorage.clear();
       window.location.reload();
     }
@@ -89,6 +101,8 @@ export default function UserContext({ children }){
                 errors,
                 loggedIn,
                 isLoading,
+                userImage,
+                userFullName,
                 handleSubmitLogin,
                 handleSubmitSignUp
             }}>

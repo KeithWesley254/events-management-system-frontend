@@ -9,12 +9,12 @@ import UserContext from './UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserContext>
-      <ThemeContext>
-        <BrowserRouter>
+    <ThemeContext>
+      <BrowserRouter>
+        <UserContext>
           <App />
-        </BrowserRouter>
-      </ThemeContext>
-    </UserContext>   
+        </UserContext>
+      </BrowserRouter>
+    </ThemeContext>
   </React.StrictMode>
 );

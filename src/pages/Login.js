@@ -70,7 +70,7 @@ const Login = () => {
                 >
                     {(Array.isArray(loginSlides) ? loginSlides : []).map((slide) => {
                       return(
-                        <>
+                        <div key={slide?.id}>
                           <img 
                             src={slide?.image_url}
                             alt={slide?.title}
@@ -80,7 +80,7 @@ const Login = () => {
                               maxHeight: "720px",
                             }}
                           />
-                        </>
+                        </div>
                       )
                     })}                   
                 </Carousel>
