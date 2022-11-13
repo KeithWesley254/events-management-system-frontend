@@ -1,5 +1,5 @@
 import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, InputLabel, OutlinedInput, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { ThemeState } from "../ThemeContext";
@@ -8,6 +8,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   const [vipTickets, setVipTickets] = useState(0);
   const [regularTickets, setRegularTickets] = useState(0);
   const [mobileNumber, setPhoneNumber] = useState("");
+  const [convertedAmount, setConvertedAmount] = useState('');
 
   const { mainHeading, bgColor, formAccent, formTextC, accent, textColor, btnColor, btnHover, btnTextColor } = ThemeState();
   
@@ -61,6 +62,20 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
     };
 
   }
+
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'aecf993c34mshd3d18f8add32b27p113fa7jsn644341e81e9c',
+        'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
+      }
+    };
+    
+    fetch(`https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=USD&want=KES&amount=${totalAmount}`, options)
+      .then(response => response.json())
+      .then(data => setConvertedAmount(data.new_amount))
+  }, [totalAmount])
 
   return (
     <Box sx={{bgcolor: bgColor}}>
@@ -127,7 +142,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
           />
 
           <DialogContentText>
-            <InputLabel sx={{color: textColor}}><b>Total Amount</b></InputLabel>
+            <InputLabel sx={{color: textColor}}><b>Total Amount in Kenyan Shilling</b></InputLabel>
           </DialogContentText>
 
           <OutlinedInput 
@@ -135,7 +150,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
           min="0"
           
           sx={{mb: 2, width: "60%", input: { color: formAccent } }}
-          value={totalAmount}
+          value={convertedAmount}
           />
 
         </DialogContent>
