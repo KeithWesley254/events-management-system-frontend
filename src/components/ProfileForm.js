@@ -1,12 +1,10 @@
 import { Box, Button, Card, CardActions, CardContent, FormControl, FormControlLabel, FormHelperText, OutlinedInput, Radio, RadioGroup, TextField } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { ThemeState } from '../ThemeContext';
-import { UserState } from '../UserContext';
 import PhoneInput from 'react-phone-number-input';
 
-const ProfileForm = ({ setIsProfile, userProfile, setUserProfile }) => {
+const ProfileForm = ({ setIsProfile, user, userProfile, setUserProfile }) => {
   const { btnColor, btnTextColor, btnHover, cardBg, cardHover, formAccent, formTextC, textColor } = ThemeState();
-  const { user } = UserState();
 
   const [formData, setFormData] = useState({
     full_name: userProfile?.full_name,
@@ -27,7 +25,7 @@ const ProfileForm = ({ setIsProfile, userProfile, setUserProfile }) => {
     
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/user_profiles/${user.id}`,{
+    fetch(`http://localhost:3000/api/user_profiles/${user?.id}`,{
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -44,8 +42,7 @@ const ProfileForm = ({ setIsProfile, userProfile, setUserProfile }) => {
     }).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
-          console.log(data)
-          setUserProfile(data[0])
+          setUserProfile(data)
           setIsProfile(true)
         });
       }}) 

@@ -12,10 +12,11 @@ const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { user, logOut, userProfile, isLoading } = UserState();
+  const { user, userProfile, logOut } = UserState();
   const { isDarkMode, accent, subTitles, textColor, bgColor, setIsDarkMode } = ThemeState();
 
   const navigate = useNavigate();
+  const location = useLocation();
   
   function handleLogoutClick() {
     logOut();
@@ -35,11 +36,6 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const location = useLocation();
-
-  if (isLoading === true)
-    return <LinearProgress style={{ backgroundColor: "#d1410a" }} />;
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: bgColor }}>
@@ -322,16 +318,30 @@ const Header = () => {
             
             <Tooltip title="Open settings">
               
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0, mr: { md: 15 } }}
-              >
-                <Avatar
-                  alt={userProfile?.full_name || ""}
-                  src={userProfile?.image_upload || ""}
-                />
-              </IconButton>
-             
+              {"error" in user ? 
+              (
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0, mr: { md: 15 } }}
+                >
+                  <Avatar
+                    alt={""}
+                    src={""}
+                  />
+                </IconButton>
+              ) : (
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0, mr: { md: 15 } }}
+                >
+                  <Avatar
+                    alt={userProfile?.full_name || ""}
+                    src={userProfile?.image_upload || ""}
+                  />
+                </IconButton>
+              )
+              }
+                  
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

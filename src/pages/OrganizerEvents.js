@@ -11,7 +11,7 @@ const OrganizerEvents = ({ userProfile }) => {
 
   const { mainHeading, cardBg, formAccent, formTextC, accent, categoryBtns, cardHover } = ThemeState();
 
-  const filteredDates = userProfile.events
+  const filteredDates = userProfile?.events
 
   function handleSearch(){
     return filteredDates.filter((event) => 
