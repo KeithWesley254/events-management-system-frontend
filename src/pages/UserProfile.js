@@ -1,15 +1,17 @@
-import { Avatar, Box, Card, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ProfileCard from '../components/ProfileCard';
 import { UserState } from '../UserContext';
 import ProfileForm from '../components/ProfileForm';
+import UserEvents from './UserEvents';
+import OrganizerEvents from './OrganizerEvents';
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isProfile, setIsProfile] = useState(true);
 
-  const { user, setUserProfileC } = UserState();
+  const { user } = UserState();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -23,7 +25,6 @@ const UserProfile = () => {
       .then(r => r.json())
       .then(data => {
         setUserProfile(data)
-        setUserProfileC(data)
         setIsLoading(false);
       })
     }
@@ -58,7 +59,18 @@ const UserProfile = () => {
         </Grid>
 
         <Grid item sx={{ height: "100%" }} xs={12} md={6}>
-          
+
+          {user?.role === ('admin' || 'organizer') &&
+          (
+            <Box sx={{width: "100%"}}>
+              <OrganizerEvents userProfile={userProfile}/>
+            </Box> 
+          ) 
+          }
+          <Box>
+            <UserEvents userProfile={userProfile}/>
+          </Box>
+
         </Grid>
 
       </Grid>

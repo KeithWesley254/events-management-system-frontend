@@ -8,6 +8,7 @@ const ProfileCard = ({ userProfile, setIsProfile }) => {
   return (
     <>
         <Card
+        className="homeCard"
           sx={{
             height: {xs: "50%", md: "60%"},
             width: {xs: "70%", md: "50%"},

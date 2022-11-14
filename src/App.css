@@ -14,12 +14,18 @@
   margin-left: 20%;
 }
 
+.heroScroll::-webkit-scrollbar {
+  display: none;
+}
+
 .homeCard::-webkit-scrollbar {
   display: none;
 }
+
 .MuiMenu-paper{
   background-color: black;
 }
+
 .loader {
   border: 16px solid #D9D9D9;
   border-top: 16px solid #d1410a;
