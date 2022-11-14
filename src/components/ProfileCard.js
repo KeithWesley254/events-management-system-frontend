@@ -36,7 +36,7 @@ const ProfileCard = ({ userProfile, setIsProfile }) => {
             </Box>
 
             <Container>
-                <Typography sx={{color: textColor}}>
+                <Typography sx={{color: textColor, fontSize: {xs: 25, md: 30}, fontWeight: "bolder"}}>
                     {userProfile?.full_name}
                 </Typography>
             </Container>

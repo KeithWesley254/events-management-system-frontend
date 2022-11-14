@@ -8,6 +8,7 @@ export default function UserContext({ children }){
     const [errors, setErrors] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [userProfile, setUserProfileC] = useState({});
 
     const navigate = useNavigate();
 
@@ -28,6 +29,22 @@ export default function UserContext({ children }){
       });
 
     }, [loggedIn]);
+
+    useEffect(() => {
+      const token = JSON.parse(localStorage.getItem("token"));
+  
+      if(user.email){
+        fetch(`http://localhost:3000/api/user_profiles/${user?.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        })
+        .then(r => r.json())
+        .then(data => {
+          setUserProfileC(data)
+        })
+      }
+    }, [user])
 
     function handleSubmitSignUp(e, data, state) {
         e.preventDefault();
@@ -94,6 +111,8 @@ export default function UserContext({ children }){
                 errors,
                 loggedIn,
                 isLoading,
+                userProfile,
+                setUserProfileC,
                 handleSubmitLogin,
                 handleSubmitSignUp
             }}>

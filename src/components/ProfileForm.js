@@ -52,7 +52,6 @@ const ProfileForm = ({ setIsProfile, userProfile, setUserProfile }) => {
   }
 
   const radios = ["male", "female", "other"]
-  console.log(formData)
 
   return (
     <>

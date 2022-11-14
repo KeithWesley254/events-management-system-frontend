@@ -8,16 +8,8 @@ const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isProfile, setIsProfile] = useState(true);
-  const [formData, setFormData] = useState({
-    full_name: '',
-    gender: '',
-    age: '',
-    bio: '',
-    mobile_no: '',
-    image_upload: ''
-  });
 
-  const { user } = UserState();
+  const { user, setUserProfileC } = UserState();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -31,6 +23,7 @@ const UserProfile = () => {
       .then(r => r.json())
       .then(data => {
         setUserProfile(data)
+        setUserProfileC(data)
         setIsLoading(false);
       })
     }
