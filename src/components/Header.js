@@ -11,11 +11,28 @@ import { UserState } from "../UserContext";
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [userProfile, setUserProfile] = React.useState({});
 
-  const { user, logOut, userFullName, userImage, isLoading } = UserState();
+  const { user, logOut, isLoading } = UserState();
   const { isDarkMode, accent, subTitles, textColor, bgColor, setIsDarkMode } = ThemeState();
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    if(user.email){
+      fetch(`http://localhost:3000/api/user_profiles/${user?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      })
+      .then(r => r.json())
+      .then(data => {
+        setUserProfile(data)
+      })
+    }
+  }, [user]);
   
   function handleLogoutClick() {
     logOut();
@@ -327,8 +344,8 @@ const Header = () => {
                 sx={{ p: 0, mr: { md: 15 } }}
               >
                 <Avatar
-                  alt={userFullName || ""}
-                  src={userImage || ""}
+                  alt={userProfile?.full_name || ""}
+                  src={userProfile?.image_upload || ""}
                 />
               </IconButton>
              
