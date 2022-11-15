@@ -1,9 +1,28 @@
-import { Avatar, Box, Button, Card, Container, Grid, Typography } from '@mui/material';
-import React from 'react';
+import { Avatar, Box, Button, Card, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ThemeState } from '../ThemeContext';
+import { UserState } from '../UserContext';
 
 const ProfileCard = ({ userProfile, setIsProfile }) => {
-    const { btnColor, btnTextColor, btnHover, cardBg, cardHover, textColor } = ThemeState();
+    const { user, logOut } = UserState();
+    const [maStory, setMaStory] = useState(false);
+    const { btnColor, bgColor, btnTextColor, btnHover, cardBg, cardHover, textColor } = ThemeState();
+
+    const navigate = useNavigate();
+
+    function handleDelete(){
+        const token = JSON.parse(localStorage.getItem("token"));
+    
+        fetch(`http://localhost:3000/api/users/${user.id}`,{
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        navigate(`/`);
+        logOut();
+    }
 
   return (
     <Grid container spacing={2} columns={12}>
@@ -45,11 +64,13 @@ const ProfileCard = ({ userProfile, setIsProfile }) => {
                         </Typography>
                     </Container>
 
-                    <Container sx={{mt: 2}}>
+                    <Container sx={{mt: 2, display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <Button
                         sx={{
                             color: btnTextColor,
                             backgroundColor: btnColor,
+                            mx: 2,
+                            width: "50%",
                             "&:hover": {backgroundColor: btnHover, }
                         }}
                         onClick={() => {
@@ -58,7 +79,67 @@ const ProfileCard = ({ userProfile, setIsProfile }) => {
                         >
                             Edit Profile
                         </Button>
+                        <Button
+                        sx={{
+                            mx: 2,
+                            width: "50%",
+                            backgroundColor: "red",
+                            color: "#fff",
+                            "&:hover": {backgroundColor: "black", }
+                        }}
+                        onClick={() => {
+                            setMaStory(true)
+                        }}
+                        >
+                            Delete Account
+                        </Button>
                     </Container>
+                    <Dialog 
+                    open={maStory}
+                    >
+                      <Box sx={{bgcolor: bgColor}}>
+                        <DialogTitle sx={{color: "red", textAlign: "center", fontSize: 20}}>
+                          WARNING
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText sx={{color: textColor}}>
+                            <b>Are You Sure you want to DELETE your Account? This Action cannot be undone!</b>
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                              onClick={() => {
+                                setMaStory(false)
+                              }}
+                              sx={{  
+                                width: "100%",
+                                height: "50%",
+                                backgroundColor: btnColor,
+                                color: btnTextColor,
+                                "&:hover": {backgroundColor: btnHover, }
+                              }}
+                              >
+                                Go Back
+                          </Button>
+                          <Button
+                            onClick={(e) => {
+                              handleDelete(e)
+                              setMaStory(false)
+                            }}
+                            sx={{  
+                              width: "100%",
+                              height: "50%",
+                              backgroundColor: "red",
+                              color: "#fff",
+                              "&:hover": {backgroundColor: "black", }
+                            }}
+                            >
+                              Delete Account
+                          </Button>
+                        </DialogActions>
+                      </Box>
+                      
+                    </Dialog>
                 </Card>
             </Box>
         </Grid>

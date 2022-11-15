@@ -76,8 +76,7 @@ const Login = () => {
                             alt={slide?.title}
                             style={{
                               width: "100%",
-                              height: "720px",
-                              maxHeight: "720px",
+                              height: "800px",
                             }}
                           />
                         </div>
