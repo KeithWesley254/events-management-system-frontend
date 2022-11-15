@@ -130,7 +130,7 @@ const ProfileForm = ({ setIsProfile, user, userProfile, setUserProfile }) => {
               </form>
             </CardContent>
             
-            <CardActions sx={{ mt: 2, display: "flex", justifyContent: "end" }}>
+            <CardActions sx={{ mt: 2, display: "flex", justifyContent: "start" }}>
               <Button
               sx={{
                   color: btnTextColor,
