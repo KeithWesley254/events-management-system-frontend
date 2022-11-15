@@ -20,7 +20,7 @@ const OrganizerEvents = ({ userProfile }) => {
   }
 
   return (
-    <Box sx={{width: "100%",}}>
+    <Box>
       <br />
 
       <Grid item xs={12} md={12}>
@@ -47,10 +47,9 @@ const OrganizerEvents = ({ userProfile }) => {
         </Box>
       </Grid>
 
-      <Grid container spacing={2} columns={12} sx={{textAlign: "center", pl:4, pr:4, justifyContent: "center", alignItems: "center", fontSize: 14 }}>
+      <Grid container spacing={2} columns={12} sx={{textAlign: "center", width: "100%", pr:4, justifyContent: "center", alignItems: "center", fontSize: 14 }}>
         <Grid item xs={12} md={12}>
-          <div className='heroScroll' style={{ position: "relative", width: "100%", overflowX: "auto" }} >
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: 'row', }}>
+          <Box className='heroScroll' sx={{ mr: 1, ml: 1, maxHeight: 400, gap: 1, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row', overflowX: "auto" }} >
             {handleSearch()
             .slice((eventPage - 1) * 8, (eventPage - 1) * 8 + 8)
             .sort((a, b) => new Date(a.event_start_date) - new Date(b.event_start_date))
@@ -64,7 +63,6 @@ const OrganizerEvents = ({ userProfile }) => {
                       width: 200, 
                       height: 260, 
                       p: 2,
-                      m:2,
                       bgcolor: cardBg,
                       cursor: "pointer",
                       overflowY: "scroll",
@@ -103,8 +101,7 @@ const OrganizerEvents = ({ userProfile }) => {
                 </div>
               );
             })}
-            </Box>
-          </div>
+          </Box>
         </Grid>
       </Grid>
      

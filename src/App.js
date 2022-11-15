@@ -12,6 +12,7 @@ import SpecificEvent from "./pages/SpecificEvent";
 import CrudEventForm from './pages/CrudEventForm';
 import { ThemeState } from "./ThemeContext";
 import { UserState } from "./UserContext";
+import Footer from "./components/Footer";
 
 function App() {
   const { bgColor } = ThemeState();
@@ -49,6 +50,7 @@ function App() {
           <Route path="/update-specific-event/:id" element={<CrudEventForm />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

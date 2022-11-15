@@ -13,10 +13,9 @@ const UserProfile = () => {
 
   if (userProfile && userProfile.user_id){
     return (
-      <Box >
-        <Grid container spacing={2} alignItems="center" justify="center" sx={{ height: {md: "100vh"}, minHeight: {xs: "100vh", md: "100vh"} }} columns={12}>
+        <Grid container spacing={2} columns={12}>
 
-          <Grid item sx={{ display:'flex', height: {md: "100%", xs: "100vh"}, justifyContent:'center' }} xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             {isProfile ?
             (
               <ProfileCard setIsProfile={setIsProfile} userProfile={userProfile}/>
@@ -28,23 +27,18 @@ const UserProfile = () => {
 
           </Grid>
 
-          <Grid item sx={{ height: "100%", width: "100%" }} xs={12} md={6}>
+          <Grid item xs={12} md={6}>
 
             {user?.role === ('admin' || 'organizer') &&
             (
-              <Box sx={{width: "100%"}}>
-                <OrganizerEvents userProfile={userProfile}/>
-              </Box> 
+              <OrganizerEvents userProfile={userProfile}/>
             ) 
             }
-            <Box>
               <UserEvents userProfile={userProfile}/>
-            </Box>
 
           </Grid>
 
         </Grid>
-    </Box>
     )
   } else {
     return (

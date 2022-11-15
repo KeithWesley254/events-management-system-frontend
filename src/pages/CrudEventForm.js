@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container } from "@mui/material";
+import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container, Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ThemeState } from '../ThemeContext';
 import { UserState } from '../UserContext';
@@ -9,35 +9,36 @@ const steps = ["Main Details", "Pricing", "Misc"];
 export default function CreateAnEvent() {
   const { user } = UserState();
   const [categoryData, setCategoryData] = useState([]);
+  const [maStory, setMaStory] = useState(false);
   const { state } = useLocation();
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
-  function toDatetimeLocal(content){
-    // converting date to datetime local for calendar to pick it up for update
-    let date = new Date(content).toISOString();
-    let newDate = new Date(date)
-
-    const ten = function (i) {
-      return (i < 10 ? '0' : '') + i;
-    }
-
-    const yyyy = newDate.getUTCFullYear()
-    const MM = ten(newDate.getUTCMonth())
-    const dd = ten(newDate.getUTCDate())
-    const hh = ten(newDate.getUTCHours())
-    const mm = ten(newDate.getUTCMinutes())
-
-    return yyyy + '-' + MM + '-' + dd + 'T' + hh + ':' + mm
-  }
+  
+  Date.prototype.toDatetimeLocal =
+  function toDatetimeLocal() {
+    var
+      date = this,
+      ten = function (i) {
+        return (i < 10 ? '0' : '') + i;
+      },
+      YYYY = date.getFullYear(),
+      MM = ten(date.getMonth() + 1),
+      DD = ten(date.getDate()),
+      HH = ten(date.getHours()),
+      II = ten(date.getMinutes()),
+      SS = ten(date.getSeconds())
+    ;
+    return YYYY + '-' + MM + '-' + DD + 'T' +
+             HH + ':' + II + ':' + SS;
+  };
   
   const [formData, setFormData] = useState({
     category_id: state?.category_id,
     title: state?.title,
-    event_start_date: toDatetimeLocal(state?.event_start_date),
-    event_end_date: toDatetimeLocal(state?.event_end_date),
+    event_start_date: new Date(state?.event_start_date).toDatetimeLocal(),
+    event_end_date: new Date(state?.event_end_date).toDatetimeLocal(),
     ticket_format: state?.ticket_format,
-    early_booking_end_date: toDatetimeLocal(state?.early_booking_end_date),
+    early_booking_end_date: new Date(state?.early_booking_end_date).toDatetimeLocal(),
     early_booking_price_regular: state?.early_booking_price_regular,
     early_booking_price_vip: state?.early_booking_price_vip,
     location: state?.location,
@@ -51,7 +52,7 @@ export default function CreateAnEvent() {
     image_url2: state?.image_url2,
   });
 
-  const { formBg, btnHover, btnColor, btnTextColor, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
+  const { formBg, bgColor, btnHover, btnColor, btnTextColor, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/categories`)
@@ -132,6 +133,20 @@ export default function CreateAnEvent() {
           window.location.reload();
         });
       }}) 
+  }
+  
+  function handleDelete(){
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    fetch(`http://localhost:3000/api/events/${state.id}`,{
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    navigate(`/user-profiles/${user.id}`);
+    window.location.reload();
   }
 
   if(isLoading === true) return (
@@ -332,18 +347,81 @@ export default function CreateAnEvent() {
                                   </Button>
                                 </FormControl>
                               </Box>
+                              <Box >
+                                <FormControl sx={{ m: 1, width: "50%"}}>
+                                  <Button
+                                  onClick={() => {
+                                    setMaStory(true)
+                                  }}
+                                  sx={{  
+                                    width: "100%",
+                                    height: "50%",
+                                    backgroundColor: "red",
+                                    color: "#fff",
+                                    "&:hover": {backgroundColor: "black", }
+                                  }}
+                                  >
+                                    Delete Event
+                                  </Button>
+                                </FormControl>
+                              </Box>
+                              <Dialog 
+                              open={maStory}
+                              >
+                                <Box sx={{bgcolor: bgColor}}>
+                                  <DialogTitle sx={{color: "red", textAlign: "center", fontSize: 20}}>
+                                    WARNING
+                                  </DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText sx={{color: textColor}}>
+                                      <b>Are You Sure you want to DELETE this event? This Action cannot be undone!</b>
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogActions>
+                                    <Button
+                                        onClick={() => {
+                                          setMaStory(false)
+                                        }}
+                                        sx={{  
+                                          width: "100%",
+                                          height: "50%",
+                                          backgroundColor: btnColor,
+                                          color: btnTextColor,
+                                          "&:hover": {backgroundColor: btnHover, }
+                                        }}
+                                        >
+                                          Go Back
+                                    </Button>
+                                    <Button
+                                      onClick={(e) => {
+                                        handleDelete(e)
+                                        setMaStory(false)
+                                      }}
+                                      sx={{  
+                                        width: "100%",
+                                        height: "50%",
+                                        backgroundColor: "red",
+                                        color: "#fff",
+                                        "&:hover": {backgroundColor: "black", }
+                                      }}
+                                      >
+                                        Delete Event
+                                    </Button>
+                                  </DialogActions>
+                                </Box>
+                                
+                              </Dialog>
                           </Box>
                         )}
                     </Box>
                   </form>
-                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Box sx={{ display: "flex", justifyContent: "end" }}>
                     <Button
                       onClick={handleBack}
                       sx={{ 
-                        width: "20%",
+                        width: "10%",
+                        mx: 4,
                         height: "50%",
-                        mr: 4,
-                        ml: 4,
                         my: 3,
                         backgroundColor: btnColor,
                         color: btnTextColor,
@@ -356,10 +434,9 @@ export default function CreateAnEvent() {
                     <Button onClick={handleNext} 
                     variant="outlined"
                       sx={{ 
-                        width: "20%",
+                        width: "10%",
+                        mx: 4,
                         height: "50%",
-                        mr: 4,
-                        ml: 4,
                         my: 3,
                         backgroundColor: btnColor,
                         color: btnTextColor,
