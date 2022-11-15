@@ -47,65 +47,67 @@ const OrganizerEvents = ({ userProfile }) => {
         </Box>
       </Grid>
 
-      <Grid sx={{mx: 2}} item xs={12} md={12}>
-        <div className='heroScroll' style={{ position: "relative", width: "100%", overflowX: "auto" }} >
-          <Box sx={{ display: "flex", justifyContent: "center", flexDirection: 'row', }}>
-          {handleSearch()
-          .slice((eventPage - 1) * 8, (eventPage - 1) * 8 + 8)
-          .sort((a, b) => new Date(a.event_start_date) - new Date(b.event_start_date))
-          .map((event) => {
-            return (
-              <div key={event.id}>
-                <Card
-                  className="homeCard"
-                  sx={{
-                    textAlign: "left",
-                    width: 200, 
-                    height: 260, 
-                    p: 2,
-                    m:2,
-                    bgcolor: cardBg,
-                    cursor: "pointer",
-                    overflowY: "scroll",
-                    "&:hover": {boxShadow: cardHover, }
-                  }}
-                  onClick={() => navigate(`/specific-event/${event.id}`)}
-                >
-                  <CardContent>
-                    
-                    <Typography variant="h1" sx={{ color: categoryBtns, fontFamily: "nunito", fontWeight: "bolder", fontSize: 15 }}>
-                      {event.title}
-                    </Typography>
-                    <br />
+      <Grid container spacing={2} columns={12} sx={{textAlign: "center", pl:4, pr:4, justifyContent: "center", alignItems: "center", fontSize: 14 }}>
+        <Grid item xs={12} md={12}>
+          <div className='heroScroll' style={{ position: "relative", width: "100%", overflowX: "auto" }} >
+            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: 'row', }}>
+            {handleSearch()
+            .slice((eventPage - 1) * 8, (eventPage - 1) * 8 + 8)
+            .sort((a, b) => new Date(a.event_start_date) - new Date(b.event_start_date))
+            .map((event) => {
+              return (
+                <div key={event.id}>
+                  <Card
+                    className="homeCard"
+                    sx={{
+                      textAlign: "left",
+                      width: 200, 
+                      height: 260, 
+                      p: 2,
+                      m:2,
+                      bgcolor: cardBg,
+                      cursor: "pointer",
+                      overflowY: "scroll",
+                      "&:hover": {boxShadow: cardHover, }
+                    }}
+                    onClick={() => navigate(`/update-specific-event/${event.id}`, { state: event })}
+                  >
+                    <CardContent>
                       
-                    <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "bold", color: accent}}>
-                      {new Date(event.event_start_date).toUTCString()}
-                    </Typography>
-                    <br />
-                    
-                    <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "regular", color: categoryBtns}}>
-                      {event.location}
-                    </Typography>
-                    <br />
-                    
-                    <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "bold", color: categoryBtns}}>
-                      {event.time_diff < 0 ? (
-                        <p>Event has passed</p>
-                      ) : (
-                        <i>{event.time_diff + " days remaining"}</i>
-                      )}
-                    </Typography>
+                      <Typography variant="h1" sx={{ color: categoryBtns, fontFamily: "nunito", fontWeight: "bolder", fontSize: 15 }}>
+                        {event.title}
+                      </Typography>
+                      <br />
+                        
+                      <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "bold", color: accent}}>
+                        {new Date(event.event_start_date).toUTCString()}
+                      </Typography>
+                      <br />
+                      
+                      <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "regular", color: categoryBtns}}>
+                        {event.location}
+                      </Typography>
+                      <br />
+                      
+                      <Typography variant="body1" sx={{ fontSize: 13, fontWeight: "bold", color: categoryBtns}}>
+                        {event.time_diff < 0 ? (
+                          <p>Event has passed</p>
+                        ) : (
+                          <i>{event.time_diff + " days remaining"}</i>
+                        )}
+                      </Typography>
 
-                  </CardContent>
-                </Card>
-                &nbsp;
-              </div>
-            );
-          })}
-          </Box>
-        </div>
+                    </CardContent>
+                  </Card>
+                  &nbsp;
+                </div>
+              );
+            })}
+            </Box>
+          </div>
+        </Grid>
       </Grid>
-
+     
       <Grid item xs={12} md={12}>
         <Box >
           <Pagination 

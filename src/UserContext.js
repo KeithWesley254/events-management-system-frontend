@@ -30,7 +30,7 @@ export default function UserContext({ children }){
 
       const tokenRet = JSON.parse(localStorage.getItem("token"));
   
-      if(user.email){
+      if(user.id){
         fetch(`http://localhost:3000/api/user_profiles/${user?.id}`, {
           headers: {
             Authorization: `Bearer ${tokenRet}`
@@ -42,7 +42,7 @@ export default function UserContext({ children }){
         })
       }
 
-    }, [user.email]);
+    }, [user?.id]);
 
     function handleSubmitSignUp(e, data, state) {
         e.preventDefault();

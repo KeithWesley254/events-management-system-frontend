@@ -62,7 +62,7 @@ const OrganizerEvents = ({ userProfile }) => {
                     textAlign: "left",
                     width: 200, 
                     height: 260, 
-                    p: 2,
+                    p: 1,
                     m:2,
                     bgcolor: cardBg,
                     cursor: "pointer",

@@ -9,6 +9,7 @@ import CreateAnEvent from "./pages/CreateAnEvent";
 import Header from "./components/Header";
 import SpecificCategory from "./pages/SpecificCategory";
 import SpecificEvent from "./pages/SpecificEvent";
+import CrudEventForm from './pages/CrudEventForm';
 import { ThemeState } from "./ThemeContext";
 import { UserState } from "./UserContext";
 
@@ -45,6 +46,7 @@ function App() {
               <UserProfile />
             }
           />
+          <Route path="/update-specific-event/:id" element={<CrudEventForm />} />
         </Routes>
       </main>
     </div>

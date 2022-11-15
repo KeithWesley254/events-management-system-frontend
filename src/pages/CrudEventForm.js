@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ThemeState } from '../ThemeContext';
 import { UserState } from '../UserContext';
 
@@ -9,26 +9,52 @@ const steps = ["Main Details", "Pricing", "Misc"];
 export default function CreateAnEvent() {
   const { user } = UserState();
   const [categoryData, setCategoryData] = useState([]);
+  const { state } = useLocation();
   const [activeStep, setActiveStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  function toDatetimeLocal(content){
+    let date = new Date(content).toISOString();
+    let newDate = new Date(date)
+
+    const yyyy = newDate.getUTCFullYear()
+    const MM = newDate.getUTCMonth()
+    const dd = newDate.getUTCDate()
+    const hh = newDate.getUTCHours()
+    const mm = newDate.getUTCMinutes()
+
+    if( dd < 10 ) {
+      return yyyy + '-' + MM + '-' + `${0}` + dd + 'T' + hh + ':' + mm
+    } 
+    else if (MM < 10 && dd < 10){
+      return yyyy + '-' + `${0}` + MM + '-' + `${0}` + dd + 'T' + hh + ':' + mm
+    }
+    else if (MM < 10 && dd < 10){
+      return yyyy + '-' + `${0}` + MM + '-' + dd + 'T' + hh + ':' + mm
+    }
+    else{
+      return yyyy + '-' + MM + '-' + dd + 'T' + hh + ':' + mm
+    }
+  }
+  
   const [formData, setFormData] = useState({
-    category_id: '',
-    title: '',
-    event_start_date: '',
-    event_end_date: '',
-    ticket_format: '',
-    early_booking_end_date: '',
-    early_booking_price_regular: '',
-    early_booking_price_vip: '',
-    location: '',
-    regular_price: '',
-    vip_price: '',
-    vip_no_of_tickets: '',
-    regular_no_of_tickets: '',
-    description: '',
-    banner_img: '',
-    image_url1: '',
-    image_url2: '',
-    user_id: user.id
+    category_id: state?.category_id,
+    title: state?.title,
+    event_start_date: toDatetimeLocal(state?.event_start_date),
+    event_end_date: toDatetimeLocal(state?.event_end_date),
+    ticket_format: state?.ticket_format,
+    early_booking_end_date: toDatetimeLocal(state?.early_booking_end_date),
+    early_booking_price_regular: state?.early_booking_price_regular,
+    early_booking_price_vip: state?.early_booking_price_vip,
+    location: state?.location,
+    regular_price: state?.regular_price,
+    vip_price: state?.vip_price,
+    vip_no_of_tickets: state?.vip_no_of_tickets,
+    regular_no_of_tickets: state?.regular_no_of_tickets,
+    description: state?.description,
+    banner_img: state?.banner_img,
+    image_url1: state?.image_url1,
+    image_url2: state?.image_url2,
   });
 
   const { formBg, btnHover, btnColor, btnTextColor, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
@@ -38,8 +64,10 @@ export default function CreateAnEvent() {
       .then((response) => response.json())
       .then((data) => {
         setCategoryData(data);
-      });
-  }, []);
+        setIsLoading(false);
+    });
+
+  }, [state]);
 
   const totalSteps = () => {
     return steps.length;
@@ -73,34 +101,56 @@ export default function CreateAnEvent() {
   }
   
   const navigate = useNavigate();
-  
+
   function handleSubmit(e){
     e.preventDefault();
-    const data = new FormData();
-    
-    Object.keys(formData).forEach(key => {
-      data.append(key, formData[key])
-    });
-
-    submitToApi(data);
-  }
-
-  function submitToApi(data){
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/events`,{
+    fetch(`http://localhost:3000/api/events/${state.id}`,{
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        method: "POST",
-        body: data
+        method: "PATCH",
+        body: JSON.stringify({
+            category_id: formData.category_id,
+            title: formData.title,
+            event_start_date: formData.event_start_date,
+            event_end_date: formData.event_end_date,
+            ticket_format: formData.ticket_format,
+            early_booking_end_date: formData.early_booking_end_date,
+            early_booking_price_regular: formData.early_booking_price_regular,
+            early_booking_price_vip: formData.early_booking_price_vip,
+            location: formData.location,
+            regular_price: formData.regular_price,
+            vip_price: formData.vip_price,
+            vip_no_of_tickets: formData.vip_no_of_tickets,
+            regular_no_of_tickets: formData.regular_no_of_tickets,
+            description: formData.description,
+            banner_img: formData.banner_img,
+            image_url1: formData.image_url1,
+            image_url2: formData.image_url2,
+        })
     }).then((res) => {
       if (res.ok) {
         res.json().then(() => {
-          navigate("/");
+          navigate(`/user-profiles/${user.id}`);
+          window.location.reload();
         });
       }}) 
   }
+
+  if(isLoading === true) return (
+    <Grid container spacing={2} columns={12}>
+      <Grid item xs={12} md={12}>
+        <Box sx={{ borderRadius: 20, display: "inline-flex", position: "relative", width: "100%", justifyContent: "center", flexDirection: 'row' }}>
+          <div style={{marginTop: "25%", display: "inline-flex", justifyContent: "center"}}>
+            <div className="loader"></div>
+          </div>
+        </Box>
+      </Grid>
+    </Grid>
+  );
 
   return (
 
@@ -150,6 +200,7 @@ export default function CreateAnEvent() {
                                 <InputLabel sx={{ color: formTextC }} id="outlined-required"><span style={{color: "red"}}>*</span> Event Category</InputLabel>
                                 <Select 
                                 labelId="EventCategory"
+                                defaultValue={formData.category_id}
                                 name='category_id'
                                 sx={{color: formTextC}}
                                 onChange={handleChange}
@@ -283,7 +334,7 @@ export default function CreateAnEvent() {
                                     "&:hover": {backgroundColor: btnHover, }
                                   }}
                                   >
-                                    Submit
+                                    Update
                                   </Button>
                                 </FormControl>
                               </Box>
@@ -328,10 +379,6 @@ export default function CreateAnEvent() {
       </Grid>
 
     </Grid>
-    
-    
-      
        
-   
   );
 }

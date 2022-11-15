@@ -11,7 +11,7 @@ const UserProfile = () => {
 
   const { user, userProfile, setUserProfile } = UserState();
 
-  if (userProfile){
+  if (userProfile && userProfile.user_id){
     return (
       <Box >
         <Grid container spacing={2} alignItems="center" justify="center" sx={{ height: {md: "100vh"}, minHeight: {xs: "100vh", md: "100vh"} }} columns={12}>
@@ -28,7 +28,7 @@ const UserProfile = () => {
 
           </Grid>
 
-          <Grid item sx={{ height: "100%" }} xs={12} md={6}>
+          <Grid item sx={{ height: "100%", width: "100%" }} xs={12} md={6}>
 
             {user?.role === ('admin' || 'organizer') &&
             (
@@ -46,6 +46,18 @@ const UserProfile = () => {
         </Grid>
     </Box>
     )
+  } else {
+    return (
+      <Grid container spacing={2} columns={12}>
+        <Grid item xs={12} md={12}>
+          <Box sx={{ borderRadius: 20, display: "inline-flex", position: "relative", width: "100%", justifyContent: "center", flexDirection: 'row' }}>
+            <div style={{marginTop: "25%", display: "inline-flex", justifyContent: "center"}}>
+              <div className="loader"></div>
+            </div>
+          </Box>
+        </Grid>
+      </Grid>
+    );
   }
 }
 

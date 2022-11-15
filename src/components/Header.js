@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, LinearProgress } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
@@ -322,7 +322,7 @@ const Header = () => {
               (
                 <IconButton
                   onClick={handleOpenUserMenu}
-                  sx={{ p: 0, mr: { md: 15 } }}
+                  sx={{ p: 0, mr: { md: 7 } }}
                 >
                   <Avatar
                     alt={""}
@@ -332,7 +332,7 @@ const Header = () => {
               ) : (
                 <IconButton
                   onClick={handleOpenUserMenu}
-                  sx={{ p: 0, mr: { md: 15 } }}
+                  sx={{ p: 0, mr: { md: 7 } }}
                 >
                   <Avatar
                     alt={userProfile?.full_name || ""}
