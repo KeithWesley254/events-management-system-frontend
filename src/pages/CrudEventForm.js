@@ -14,27 +14,21 @@ export default function CreateAnEvent() {
   const [isLoading, setIsLoading] = useState(true);
 
   function toDatetimeLocal(content){
+    // converting date to datetime local for calendar to pick it up for update
     let date = new Date(content).toISOString();
     let newDate = new Date(date)
 
-    const yyyy = newDate.getUTCFullYear()
-    const MM = newDate.getUTCMonth()
-    const dd = newDate.getUTCDate()
-    const hh = newDate.getUTCHours()
-    const mm = newDate.getUTCMinutes()
+    const ten = function (i) {
+      return (i < 10 ? '0' : '') + i;
+    }
 
-    if( dd < 10 ) {
-      return yyyy + '-' + MM + '-' + `${0}` + dd + 'T' + hh + ':' + mm
-    } 
-    else if (MM < 10 && dd < 10){
-      return yyyy + '-' + `${0}` + MM + '-' + `${0}` + dd + 'T' + hh + ':' + mm
-    }
-    else if (MM < 10 && dd < 10){
-      return yyyy + '-' + `${0}` + MM + '-' + dd + 'T' + hh + ':' + mm
-    }
-    else{
-      return yyyy + '-' + MM + '-' + dd + 'T' + hh + ':' + mm
-    }
+    const yyyy = newDate.getUTCFullYear()
+    const MM = ten(newDate.getUTCMonth())
+    const dd = ten(newDate.getUTCDate())
+    const hh = ten(newDate.getUTCHours())
+    const mm = ten(newDate.getUTCMinutes())
+
+    return yyyy + '-' + MM + '-' + dd + 'T' + hh + ':' + mm
   }
   
   const [formData, setFormData] = useState({
@@ -160,7 +154,7 @@ export default function CreateAnEvent() {
         <Box >
           <div style={{ textAlign: "center" }}>
             <h1 style={{ fontWeight: "bolder", color: mainHeading, fontSize: 15 }}>
-              <i>Register your Event</i>
+              <i>Update Your Event</i>
             </h1>
           </div>
         </Box>
