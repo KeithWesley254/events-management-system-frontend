@@ -17,10 +17,10 @@ KEITH WESLEY, MUTAGAH KIHAHU
 
 <ol>
     <li>Our own Rails API that is the main API used.</li>
-    <li><a href="https://api-ninjas.com/api/convertcurrency" target="_blank" rel="noreferrer">>API Ninjas Team</a></li>
-    <li><a href="https://developers.google.com/calendar/api" target="_blank" rel="noreferrer">>Google Calendar API</a></li>
-    <li><a href="https://developer.safaricom.co.ke/" target="_blank" rel="noreferrer">>Daraja 2.0 API</a></li>
-    <li><a href="https://developer.paypal.com/api/rest/" target="_blank" rel="noreferrer">>Paypal API</a></li>
+    <li><a href="https://api-ninjas.com/api/convertcurrency" target="_blank" rel="noreferrer">API Ninjas Team</a></li>
+    <li><a href="https://developers.google.com/calendar/api" target="_blank" rel="noreferrer">Google Calendar API</a></li>
+    <li><a href="https://developer.safaricom.co.ke/" target="_blank" rel="noreferrer">Daraja 2.0 API</a></li>
+    <li><a href="https://developer.paypal.com/api/rest/" target="_blank" rel="noreferrer">Paypal API</a></li>
 </ol>
 
 # Deployment Link:
