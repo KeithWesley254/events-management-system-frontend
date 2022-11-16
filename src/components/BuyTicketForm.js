@@ -10,6 +10,7 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
+import Axios from "axios"
 import React, { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -74,6 +75,18 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    if (mobileNumber && convertedAmount) {
+      const number = mobileNumber.split("+");
+      const mobile = number[1];
+      console.log(convertedAmount);
+      console.log(mobile)
+      Axios.post("http://localhost:7000/token",{
+        mobile, convertedAmount
+      }).then(response => console.log(response)).catch(error => console.log(error));
+    } else {
+      console.log("Hello guys");
+    }
+
     const formData = {
       ticket_no: eventTicket,
       user_id: user?.id,
@@ -81,13 +94,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
       number_of_vip_tickets: parseInt(vipTickets),
       number_of_regular_tickets: parseInt(regularTickets),
     };
-    if (mobileNumber && convertedAmount) {
-      const number = mobileNumber.split("+");
-      console.log(number[1]);
-      console.log(convertedAmount);
-    } else {
-      console.log("Hello guys");
-    }
+    
   }
 
   useEffect(() => {
@@ -228,7 +235,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
               handleSubmit(e);
             }}
           >
-            Pay
+            Pay with Mpesa
           </Button>
         </DialogActions>
       </form>

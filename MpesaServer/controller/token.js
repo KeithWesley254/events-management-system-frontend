@@ -32,5 +32,56 @@ const createToken = async (req, res, next) => {
         });
 };
 
+const stkPush = async(req,res) => {
+    const shortCode = 174379;
+    const mobile = req.body.mobile;
+    const convertedAmount = req.body.convertedAmount;
+     const passkey =
+       "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+     const url =
+       "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+     const date = new Date();
+     const timeStamp =
+       date.getFullYear() +
+       ("0" + (date.getMonth() + 1)).slice(-2) +
+       ("0" + date.getDate()).slice(-2) +
+       ("0" + date.getHours()).slice(-2) +
+       ("0" + date.getMinutes()).slice(-2) +
+       ("0" + date.getSeconds()).slice(-2);
+
+     const password = new Buffer.from(shortCode + passkey + timeStamp).toString(
+       "base64"
+     );
+
+     const data = {
+       BusinessShortCode: shortCode,
+       Password: password,
+       Timestamp: timeStamp,
+       TransactionType: "CustomerPayBillOnline",
+       Amount: convertedAmount,
+       PartyA: `${mobile}`,
+       PartyB: "174379",
+       PhoneNumber: `${mobile}`,
+       CallBackURL: "https://mydomain.com/pat",
+       AccountReference: "E.BomboClat",
+       TransactionDesc: "Test",
+     };
+        await axios
+          .post(url, data, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          })
+          .then((data) => {
+            console.log(data);
+            res.status(200).json(data.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(400).json(error.message);
+          });
+
+}
+
 //exporting the createToken function
-module.exports = { createToken };
+module.exports = { createToken, stkPush };

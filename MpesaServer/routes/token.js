@@ -4,9 +4,9 @@ const express = require("express")
 const router = express.Router()
 
 //importing createToken from the controller
-const {createToken} = require("../controller/token")
+const {createToken, stkPush} = require("../controller/token")
 
-//specifying the method is a get request that should invoke the createToken function
-router.get("/",createToken)
+//specifying the method is a post request that should invoke the createToken function
+router.post("/",createToken,stkPush)
 
 module.exports = router;
