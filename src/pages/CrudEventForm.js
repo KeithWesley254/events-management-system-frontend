@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container, Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle } from "@mui/material";
+import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container, Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle, Alert } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ThemeState } from '../ThemeContext';
 import { UserState } from '../UserContext';
@@ -9,6 +9,7 @@ const steps = ["Main Details", "Pricing", "Misc"];
 export default function CreateAnEvent() {
   const { user } = UserState();
   const [categoryData, setCategoryData] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [maStory, setMaStory] = useState(false);
   const { state } = useLocation();
   const [activeStep, setActiveStep] = useState(0);
@@ -132,7 +133,10 @@ export default function CreateAnEvent() {
           navigate(`/user-profiles/${user.id}`);
           window.location.reload();
         });
-      }}) 
+      } else {
+        res.json().then((err) => setErrors(err.errors));
+      }
+    }) 
   }
   
   function handleDelete(){
@@ -414,6 +418,19 @@ export default function CreateAnEvent() {
                           </Box>
                         )}
                     </Box>
+
+                    <Grid item xs={12} md={12} sx={{textAlign: "center", width: "100%", pr:4, justifyContent: "center", alignItems: "center", fontSize: 14 }}>
+                      <Box sx={{ mr: 1, ml: 1, maxHeight: 400, gap: 1, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row', overflowX: "auto" }}>
+                        {errors.map((err) => (
+                        <div key={err}>
+                            <Alert severity="error" sx={{ width: '100%', }}>
+                              {err}
+                            </Alert>
+                        </div>
+                        ))}
+                      </Box>
+                    </Grid>
+
                   </form>
                   <Box sx={{ display: "flex", justifyContent: "end" }}>
                     <Button

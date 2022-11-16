@@ -25,7 +25,7 @@ const ProfileForm = ({ setIsProfile, user, userProfile, setUserProfile }) => {
     
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/user_profiles/${user?.id}`,{
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/user_profiles/${user?.id}`,{
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

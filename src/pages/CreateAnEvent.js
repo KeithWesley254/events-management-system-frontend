@@ -1,22 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Stepper,
-  Step,
-  Button,
-  Typography,
-  TextField,
-  MenuItem,
-  StepButton,
-  Input,
-  Select,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-  OutlinedInput,
-  Grid,
-  Container,
-} from "@mui/material";
+import { Box, Stepper, Step, Button, Typography, TextField, MenuItem, StepButton, Input, Select, FormControl, InputLabel, FormHelperText, OutlinedInput, Grid, Container, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ThemeState } from "../ThemeContext";
 import { UserState } from "../UserContext";
@@ -26,6 +9,7 @@ const steps = ["Main Details", "Pricing", "Misc"];
 export default function CreateAnEvent() {
   const { user } = UserState();
   const [categoryData, setCategoryData] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     category_id: "",
@@ -122,8 +106,10 @@ export default function CreateAnEvent() {
         res.json().then(() => {
           navigate("/");
         });
+      } else {
+        res.json().then((err) => setErrors(err.errors));
       }
-    });
+    }) 
   }
 
   return (
@@ -542,63 +528,74 @@ export default function CreateAnEvent() {
                     />
                   </FormControl>
 
-                  <Box>
-                    <FormControl sx={{ m: 1, width: "50%" }}>
-                      <Button
-                        type="submit"
-                        onClick={(e) => {
-                          handleSubmit(e);
-                        }}
-                        sx={{
-                          width: "100%",
-                          height: "50%",
-                          backgroundColor: btnColor,
-                          color: btnTextColor,
-                          "&:hover": { backgroundColor: btnHover },
-                        }}
-                      >
-                        Submit
-                      </Button>
-                    </FormControl>
-                  </Box>
-                </Box>
-              )}
-            </Box>
-          </form>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              onClick={handleBack}
-              sx={{
-                width: "20%",
-                height: "50%",
-                mr: 4,
-                ml: 4,
-                my: 3,
-                backgroundColor: btnColor,
-                color: btnTextColor,
-                "&:hover": { backgroundColor: btnHover },
-              }}
-            >
-              Back
-            </Button>
+                              <Box >
+                                <FormControl sx={{ m: 1, width: "50%"}}>
+                                  <Button
+                                  type='submit'
+                                  onClick={(e) => {
+                                    handleSubmit(e)
+                                  }}
+                                  sx={{  
+                                    width: "100%",
+                                    height: "50%",
+                                    backgroundColor: btnColor,
+                                    color: btnTextColor,
+                                    "&:hover": {backgroundColor: btnHover, }
+                                  }}
+                                  >
+                                    Submit
+                                  </Button>
+                                </FormControl>
+                              </Box>
+                          </Box>
+                        )}
+                    </Box>
 
-            <Button
-              onClick={handleNext}
-              variant="outlined"
-              sx={{
-                width: "20%",
-                height: "50%",
-                mr: 4,
-                ml: 4,
-                my: 3,
-                backgroundColor: btnColor,
-                color: btnTextColor,
-                "&:hover": { backgroundColor: btnHover },
-              }}
-            >
-              Next
-            </Button>
-          </Box>
+                    <Grid item xs={12} md={12} sx={{textAlign: "center", width: "100%", pr:4, justifyContent: "center", alignItems: "center", fontSize: 14 }}>
+                      <Box sx={{ mr: 1, ml: 1, maxHeight: 400, gap: 1, justifyContent: "center", flexWrap: "wrap", display: "inline-flex", flexDirection: 'row', overflowX: "auto" }}>
+                        {errors.map((err) => (
+                        <div key={err}>
+                            <Alert severity="error" sx={{ width: '100%', }}>
+                              {err}
+                            </Alert>
+                        </div>
+                        ))}
+                      </Box>
+                    </Grid>
+
+                  </form>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      onClick={handleBack}
+                      sx={{ 
+                        width: "20%",
+                        height: "50%",
+                        mr: 4,
+                        ml: 4,
+                        my: 3,
+                        backgroundColor: btnColor,
+                        color: btnTextColor,
+                        "&:hover": {backgroundColor: btnHover, }
+                      }}
+                    >
+                      Back
+                    </Button>
+                    
+                    <Button onClick={handleNext} 
+                    variant="outlined"
+                      sx={{ 
+                        width: "20%",
+                        height: "50%",
+                        mr: 4,
+                        ml: 4,
+                        my: 3,
+                        backgroundColor: btnColor,
+                        color: btnTextColor,
+                        "&:hover": {backgroundColor: btnHover, }
+                      }}>
+                      Next
+                    </Button>
+                  </Box>
         </Box>
       </Grid>
     </Grid>
