@@ -62,7 +62,7 @@ const stkPush = async(req,res) => {
        PartyA: `${mobile}`,
        PartyB: "174379",
        PhoneNumber: `${mobile}`,
-       CallBackURL: "https://mydomain.com/pat",
+       CallBackURL: "http://localhost:7000/token",
        AccountReference: "E.BomboClat",
        TransactionDesc: "Test",
      };
