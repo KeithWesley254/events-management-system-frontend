@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.06feaed1.css",
+    "main.js": "/static/js/main.1b38b204.js",
+    "static/media/nature banner.png": "/static/media/nature banner.c3024c5b520019beff9b.png",
+    "static/media/main banner.png": "/static/media/main banner.f95bf39df033ade27aff.png",
+    "static/media/fitness banner.png": "/static/media/fitness banner.9855985214f68a8cb1f9.png",
+    "static/media/tech banner.png": "/static/media/tech banner.4cb21428867bd262b808.png",
+    "static/media/progamer banner.png": "/static/media/progamer banner.adab2293a33911d80fa5.png",
+    "index.html": "/index.html",
+    "main.06feaed1.css.map": "/static/css/main.06feaed1.css.map",
+    "main.1b38b204.js.map": "/static/js/main.1b38b204.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.06feaed1.css",
+    "static/js/main.1b38b204.js"
+  ]
+}
