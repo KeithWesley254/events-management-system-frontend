@@ -37,23 +37,6 @@ const Footer = () => {
                         </Box>
                         &nbsp;
                         <Box>
-                            {user?.role === ("admin" || "organizer") && (
-                            <>
-                                <Link
-                                style={{cursor: 'pointer'}} 
-                                color="inherit" 
-                                underline='none'
-                                onClick={() => {
-                                    navigate("/create-an-event");
-                                }}
-                                >
-                                Create An Event
-                                </Link>
-                            </>
-                            )}
-                        </Box>
-                        &nbsp;
-                        <Box>
                             {"role" in user && (
                             <>
                                 <Link
@@ -65,6 +48,23 @@ const Footer = () => {
                                 }}
                                 >
                                 Profile
+                                </Link>
+                            </>
+                            )}
+                        </Box>
+                        &nbsp;
+                        <Box>
+                            {user?.role === ("admin" || "organizer") && (
+                            <>
+                                <Link
+                                style={{cursor: 'pointer'}} 
+                                color="inherit" 
+                                underline='none'
+                                onClick={() => {
+                                    navigate("/create-an-event");
+                                }}
+                                >
+                                Create An Event
                                 </Link>
                             </>
                             )}
