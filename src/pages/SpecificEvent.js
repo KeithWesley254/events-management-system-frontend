@@ -21,7 +21,7 @@ const SpecificEvent = () => {
 
   const params = useParams();
 
-  const CLIENT_ID = "447222188463-f1k48ogptrj7uvhc3ni3nea32ceu0gdn.apps.googleusercontent.com";
+  const CLIENT_ID = "447222188463-7cggl0ecqcp9tur0gbjnhdcr6em94ui4.apps.googleusercontent.com";
   const API_KEY = "AIzaSyDSu0IfbznPAlKhL8LKY6YZuwItkfLwLvE";
   const DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
