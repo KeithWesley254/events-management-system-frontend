@@ -13,6 +13,14 @@ KEITH WESLEY, MUTAGAH KIHAHU
     <img src="./src/assets/ReadMe/update-event.png" alt="update-event-image" width="400"/>
 </div>
 
+# Technologies used:
+<ol>
+    <li>React JS</li>
+    <li>Material Ui<li>
+    <li>Ruby on Rails<li>
+    <li>Postgresql<li>
+</ol>
+
 # APIs used:
 
 <ol>
