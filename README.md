@@ -6,10 +6,11 @@ KEITH WESLEY, MUTAGAH KIHAHU
  Like you, the unstoppable entrepreneurs and passionate social ringleaders, we thrive at the intersection of culture, community, and commerce. We take on the complex world of ticketing—making. It's fast and easy for anyone to sell tickets and share their passion. Everything we build empowers creators, founders, and trendsetters to build thriving brands and communities through live experiences. Do more of what you love and grow eventfully
 
 # Project Images:
-<div align="center">
+<div align="center" flexWrap="wrap", display="inline-flex", flexDirection="row", gap=10>
     <img src="./src/assets/ReadMe/main-image.png" alt="main-image" width="400"/>
-    <br>
     <img src="./src/assets/ReadMe/second-image.png" alt="second-image" width="400"/>
+    <img src="./src/assets/ReadMe/Profile-event.png" alt="profile-image" width="400"/>
+    <img src="./src/assets/ReadMe/update-event.png" alt="update-event-image" width="400"/>
 </div>
 
 # APIs used:
