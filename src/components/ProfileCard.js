@@ -14,7 +14,7 @@ const ProfileCard = ({ userProfile, setIsProfile }) => {
     function handleDelete(){
         const token = JSON.parse(localStorage.getItem("token"));
     
-        fetch(`http://localhost:3000/api/users/${user.id}`,{
+        fetch(`https://events-bomboclat-api.herokuapp.com/api/users/${user.id}`,{
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
