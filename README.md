@@ -17,7 +17,9 @@ KEITH WESLEY, MUTAGAH KIHAHU
 
 <ol>
     <li>React JS</li>
-    <li>Material Ui<li>
+    <li>Material Ui</li>
+    <li>Ruby on Rails</li>
+    <li>Postgresql</li>
 </ol>
 
 # APIs used:
