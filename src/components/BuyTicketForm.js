@@ -1,16 +1,4 @@
-import {
-  Button,
-  Box,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Divider,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-import Axios from "axios";
+import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -18,24 +6,13 @@ import { ThemeState } from "../ThemeContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BuyTicketForm = ({ user, event, handleCloseModal }) => {
-  const [amountError, setAmountError] = useState(false);
-  const [mobileError, setMobileError] = useState(false);
   const [vipTickets, setVipTickets] = useState(0);
   const [regularTickets, setRegularTickets] = useState(0);
   const [mobileNumber, setPhoneNumber] = useState("");
   const [convertedAmount, setConvertedAmount] = useState("");
+  const open = "open"
 
-  const {
-    mainHeading,
-    bgColor,
-    formAccent,
-    formTextC,
-    accent,
-    textColor,
-    btnColor,
-    btnHover,
-    btnTextColor,
-  } = ThemeState();
+  const { mainHeading, bgColor, formAccent, formTextC, accent, textColor, btnColor, btnHover, btnTextColor } = ThemeState();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -106,7 +83,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
       user_id: user?.id
     }
 
-    fetch(`http://localhost:3000/api/payment`, {
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/payment`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -123,8 +100,8 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
       })
     })
     .then(r => r.json())
-    .then((data) => {
-      navigate('/mpesa-response', { state: data })
+    .then(() => {
+      navigate('/', { state: open })
     })
   }
     
@@ -219,7 +196,6 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
           <OutlinedInput
             type="number"
             min="0"
-            error={amountError}
             sx={{ mb: 2, width: "60%", input: { color: formAccent } }}
             value={convertedAmount}
             onChange={(event) => setConvertedAmount(event.target.value)}

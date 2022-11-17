@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Grid, LinearProgress } from '@mui/material';
+import { Box, Grid, LinearProgress, Stack, Snackbar } from '@mui/material';
 import Carousel from "react-material-ui-carousel";
 import Categories from '../components/Categories';
 import HomePageEvents from '../components/HomePageEvents';
@@ -9,12 +9,33 @@ import progamer from '../assets/banners/progamer banner.png';
 import natureBanner from '../assets/banners/nature banner.png';
 import techBanner from '../assets/banners/tech banner.png';
 import fitnessBanner from '../assets/banners/fitness banner.png';
+import { useLocation } from 'react-router-dom';
+import MuiAlert from '@mui/material/Alert';
 
 const Hero = () => {
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { mainHeading } = ThemeState();
+  const [open, setOpen] = useState(false);
+  const { state } = useLocation();
+
+  useEffect(() => {
+
+    setOpen(state)
+  }, [])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
   const banners = [
     {id: 1, img_url: mainBanner, title: "main banner"},
     {id: 2, img_url: progamer, title: "pro gamer"},
@@ -98,6 +119,14 @@ const Hero = () => {
           </Box>
         </Grid>
       </Grid>
+
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} autoHideDuration={6000} severity="success" sx={{ width: '100%' }}>
+            Payment Recorded. On Success, event will be added to your profile!
+          </Alert>
+        </Snackbar>
+      </Stack>
 
     </main>
   )
