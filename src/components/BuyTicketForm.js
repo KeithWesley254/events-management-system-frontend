@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { ThemeState } from "../ThemeContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BuyTicketForm = ({ user, event, handleCloseModal }) => {
   const [amountError, setAmountError] = useState(false);
@@ -35,6 +36,9 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
     btnHover,
     btnTextColor,
   } = ThemeState();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   let currentDate = new Date().getTime();
   let totalAmount = 0;
@@ -74,58 +78,56 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
 
   const eventTicket = event.ticket_format + `${ticketNumber + 1}`;
 
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'aecf993c34mshd3d18f8add32b27p113fa7jsn644341e81e9c',
+        'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
+      }
+    };
+    
+    fetch(`https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=USD&want=KES&amount=${totalAmount}`, options)
+      .then(response => response.json())
+      .then(data => setConvertedAmount(data.new_amount))
+  }, [totalAmount])
+
   function handleSubmit(e) {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem("token"));
-    setAmountError(false);
-    if (convertedAmount === "") setAmountError(true);
-
-    if (mobileNumber && convertedAmount) {
-      const number = mobileNumber.split("+");
-      const mobile = number[1];
-
-      Axios.post("http://localhost:7000/token", {
-        mobile,
-        convertedAmount,
-      })
-        .then((response) => 
-        console.log(response))
-        .catch((error) => console.log(error));
-    }
 
     const formData = {
-      ticket_no: eventTicket,
-      user_id: user?.id,
+      amount: 1,
+      phone_number: mobileNumber,
+      vip_tickets: vipTickets,
       event_id: event?.id,
-      number_of_vip_tickets: parseInt(vipTickets),
-      number_of_regular_tickets: parseInt(regularTickets),
-    };
-    fetch("http://[::1]:3000/api/tickets", {
-      method: "POST",
+      regular_tickets: regularTickets,
+      ticket_format: eventTicket,
+      user_id: user?.id
+    }
+
+    fetch(`http://localhost:3000/api/payment`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
-    });
+      method: 'POST',
+      body: JSON.stringify({
+        amount: formData.amount,
+        phone_number: formData.phone_number,
+        vip_tickets: formData.vip_tickets,
+        event_id: formData.event_id,
+        regular_tickets: formData.regular_tickets,
+        user_id: formData.user_id,
+        ticket_format: formData.eventTicket
+      })
+    })
+    .then(r => r.json())
+    .then((data) => {
+      navigate('/mpesa-response', { state: data })
+    })
   }
-
-  // useEffect(() => {
-  //   const options = {
-  //     method: "GET",
-  //     headers: {
-  //       "X-RapidAPI-Key": "aecf993c34mshd3d18f8add32b27p113fa7jsn644341e81e9c",
-  //       "X-RapidAPI-Host": "currency-converter-by-api-ninjas.p.rapidapi.com",
-  //     },
-  //   };
-
-  //   fetch(
-  //     `https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=USD&want=KES&amount=${totalAmount}`,
-  //     options
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => setConvertedAmount(data.new_amount));
-  // }, [totalAmount]);
+    
 
   return (
     <Box sx={{ bgcolor: bgColor }}>

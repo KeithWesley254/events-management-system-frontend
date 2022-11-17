@@ -56,7 +56,7 @@ export default function CreateAnEvent() {
   const { formBg, bgColor, btnHover, btnColor, btnTextColor, mainHeading, textColor, formAccent, formTextC, } = ThemeState();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/categories`)
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/categories`)
       .then((response) => response.json())
       .then((data) => {
         setCategoryData(data);
@@ -102,7 +102,7 @@ export default function CreateAnEvent() {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/events/${state.id}`,{
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/events/${state.id}`,{
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export default function CreateAnEvent() {
   function handleDelete(){
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/events/${state.id}`,{
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/events/${state.id}`,{
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -13,6 +13,7 @@ import CrudEventForm from './pages/CrudEventForm';
 import { ThemeState } from "./ThemeContext";
 import { UserState } from "./UserContext";
 import Footer from "./components/Footer";
+import SuccessOrNah from "./pages/SuccessOrNah";
 
 function App() {
   const { bgColor } = ThemeState();
@@ -48,6 +49,7 @@ function App() {
             }
           />
           <Route path="/update-specific-event/:id" element={<CrudEventForm />} />
+          <Route path="/mpesa-response" element={<SuccessOrNah />} />
         </Routes>
       </main>
       <Footer />

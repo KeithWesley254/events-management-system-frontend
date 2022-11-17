@@ -18,13 +18,13 @@ const AboutUs = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/communities`)
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/communities`)
     .then(r => r.json())
     .then(data => setCommunityData(data))
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/abouts`)
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/abouts`)
     .then(r => r.json())
     .then(data => setAboutUsData(data))
   }, []);

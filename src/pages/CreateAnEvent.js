@@ -44,7 +44,7 @@ export default function CreateAnEvent() {
   } = ThemeState();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/categories`)
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/categories`)
       .then((response) => response.json())
       .then((data) => {
         setCategoryData(data);
@@ -95,7 +95,7 @@ export default function CreateAnEvent() {
   function submitToApi(data) {
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/events`, {
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/events`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

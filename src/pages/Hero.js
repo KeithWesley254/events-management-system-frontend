@@ -24,8 +24,8 @@ const Hero = () => {
   ]
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/events").then(r => r.json()).then(data => setEvents(data));
-    fetch("http://localhost:3000/api/categories").then(r => r.json()).then(data => setCategories(data));
+    fetch("https://events-bomboclat-api.herokuapp.com/api/events").then(r => r.json()).then(data => setEvents(data));
+    fetch("https://events-bomboclat-api.herokuapp.com/api/categories").then(r => r.json()).then(data => setCategories(data));
     setIsLoading(false)
   }, []);
 

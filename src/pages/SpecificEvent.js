@@ -38,7 +38,7 @@ const SpecificEvent = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/events/${params.id}`)
+    fetch(`https://events-bomboclat-api.herokuapp.com/api/events/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
         setEventOne(data);
