@@ -34,6 +34,7 @@ KEITH WESLEY, MUTAGAH KIHAHU
 
 # Deployment Link:
 
+https://events-bomboclat.netlify.app/
 
 # License:
 
