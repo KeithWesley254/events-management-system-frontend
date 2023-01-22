@@ -12,7 +12,7 @@ const Login = () => {
   const { accent, formTextC, } = ThemeState();
 
   useEffect(() => {
-    fetch("https://events-bomboclat-api.herokuapp.com/api/login_slides")
+    fetch("http://localhost:3000/api/login_slides")
     .then(r => r.json())
     .then(data => {
         setLoginSlides(data)

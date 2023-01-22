@@ -83,7 +83,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
       user_id: user?.id
     }
 
-    fetch(`https://events-bomboclat-api.herokuapp.com/api/payment`, {
+    fetch(`http://localhost:3000/api/payment`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

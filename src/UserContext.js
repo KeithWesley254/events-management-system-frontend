@@ -15,7 +15,7 @@ export default function UserContext({ children }){
     useEffect(() => {
       const token = JSON.parse(localStorage.getItem("token"));
   
-      fetch("https://events-bomboclat-api.herokuapp.com/auto_login", {
+      fetch("http://localhost:3000/auto_login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -31,7 +31,7 @@ export default function UserContext({ children }){
       const tokenRet = JSON.parse(localStorage.getItem("token"));
   
       if(user.id){
-        fetch(`https://events-bomboclat-api.herokuapp.com/api/user_profiles/${user?.id}`, {
+        fetch(`http://localhost:3000/api/user_profiles/${user?.id}`, {
           headers: {
             Authorization: `Bearer ${tokenRet}`
           },
@@ -48,7 +48,7 @@ export default function UserContext({ children }){
         e.preventDefault();
         setErrors([]);
         setIsLoading(true);
-        fetch("https://events-bomboclat-api.herokuapp.com/api/users", {
+        fetch("http://localhost:3000/api/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function UserContext({ children }){
     function handleSubmitLogin(e, data, state){
         e.preventDefault();
         setIsLoading(true);
-        fetch('https://events-bomboclat-api.herokuapp.com/login', {
+        fetch('http://localhost:3000/login', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

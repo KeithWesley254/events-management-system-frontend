@@ -11,13 +11,29 @@ const OrganizerEvents = ({ userProfile }) => {
 
   const { mainHeading, cardBg, formAccent, formTextC, accent, categoryBtns, cardHover } = ThemeState();
 
+  // useEffect(() => {
+
+  //   const token = JSON.parse(localStorage.getItem("token"));
+
+  //   fetch(`http://localhost:3000/api/events/${userProfile.user_attendeds}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     },
+  //   })
+  //   .then(r => r.json())
+  //   .then(data => {
+  //     setAllEvents(data)
+  //   })
+  // }, [])
+
   const filteredDates = userProfile?.user_attendeds
 
   function handleSearch(){
-    return filteredDates.filter((event) => 
-        event.title.toLowerCase().includes(search)
+    return filteredDates?.filter((event) => 
+        event.title?.toLowerCase().includes(search)
     )
   }
+  console.log(userProfile)
 
   return (
     <Box sx={{width: "100%",}}>

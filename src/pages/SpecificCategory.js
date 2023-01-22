@@ -22,7 +22,7 @@ const SpecificCategory = () => {
   }
 
   useEffect(()=>{
-  fetch(`https://events-bomboclat-api.herokuapp.com/api/categories/${params.id}`)
+  fetch(`http://localhost:3000/api/categories/${params.id}`)
   .then(response => response.json())
   .then((data)=> {
     setCategoryData(data)

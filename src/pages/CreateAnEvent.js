@@ -44,7 +44,7 @@ export default function CreateAnEvent() {
   } = ThemeState();
 
   useEffect(() => {
-    fetch(`https://events-bomboclat-api.herokuapp.com/api/categories`)
+    fetch(`http://localhost:3000/api/categories`)
       .then((response) => response.json())
       .then((data) => {
         setCategoryData(data);

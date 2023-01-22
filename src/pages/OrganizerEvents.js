@@ -14,8 +14,8 @@ const OrganizerEvents = ({ userProfile }) => {
   const filteredDates = userProfile?.events
 
   function handleSearch(){
-    return filteredDates.filter((event) => 
-        event.title.toLowerCase().includes(search)
+    return filteredDates?.filter((event) => 
+        event.title?.toLowerCase().includes(search)
     )
   }
 
