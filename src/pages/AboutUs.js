@@ -18,13 +18,13 @@ const AboutUs = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/communities`)
+    fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/communities`)
     .then(r => r.json())
     .then(data => setCommunityData(data))
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/abouts`)
+    fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/abouts`)
     .then(r => r.json())
     .then(data => setAboutUsData(data))
   }, []);

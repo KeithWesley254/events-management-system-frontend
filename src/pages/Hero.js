@@ -45,8 +45,8 @@ const Hero = () => {
   ]
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/events").then(r => r.json()).then(data => setEvents(data));
-    fetch("http://localhost:3000/api/categories").then(r => r.json()).then(data => setCategories(data));
+    fetch("http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/events").then(r => r.json()).then(data => setEvents(data));
+    fetch("http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/categories").then(r => r.json()).then(data => setCategories(data));
     setIsLoading(false)
   }, []);
 

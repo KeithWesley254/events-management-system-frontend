@@ -22,7 +22,7 @@ const SpecificCategory = () => {
   }
 
   useEffect(()=>{
-  fetch(`http://localhost:3000/api/categories/${params.id}`)
+  fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/categories/${params.id}`)
   .then(response => response.json())
   .then((data)=> {
     setCategoryData(data)

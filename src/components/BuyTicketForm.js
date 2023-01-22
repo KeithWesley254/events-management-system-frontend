@@ -83,7 +83,7 @@ const BuyTicketForm = ({ user, event, handleCloseModal }) => {
       user_id: user?.id
     }
 
-    fetch(`http://localhost:3000/api/payment`, {
+    fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/payment`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

@@ -25,7 +25,7 @@ const ProfileForm = ({ setIsProfile, user, userProfile, setUserProfile }) => {
     
     const token = JSON.parse(localStorage.getItem("token"));
 
-    fetch(`http://localhost:3000/api/user_profiles/${user?.id}`,{
+    fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/user_profiles/${user?.id}`,{
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

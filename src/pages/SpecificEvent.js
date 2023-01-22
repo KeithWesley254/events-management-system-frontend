@@ -38,7 +38,7 @@ const SpecificEvent = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/events/${params.id}`)
+    fetch(`http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/events/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
         setEventOne(data);

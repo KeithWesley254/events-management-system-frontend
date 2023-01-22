@@ -12,7 +12,7 @@ const Login = () => {
   const { accent, formTextC, } = ThemeState();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/login_slides")
+    fetch("http://bomboclat-api-1597862409.eu-west-2.elb.amazonaws.com/api/login_slides")
     .then(r => r.json())
     .then(data => {
         setLoginSlides(data)
