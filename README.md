@@ -1,3 +1,15 @@
+# DISCLAIMER
+<ol>
+    <li>
+    External APIs like Mpesa and google calendar require extra paid services for production and because of this, we did not include their functionality.
+    </li>
+    <li>
+    We avoided using active storage for this version as cloud storage is a paid service but this is a dummy project. Kindly use url links instead.
+    </li>
+</ol>
+
+
+
 # Project Name:
 Events Bomboclat
 # Authors:
@@ -29,7 +41,6 @@ KEITH WESLEY, MUTAGAH KIHAHU
     <li><a href="https://api-ninjas.com/api/convertcurrency" target="_blank" rel="noreferrer">API Ninjas Team Currency Convertor</a></li>
     <li><a href="https://developers.google.com/calendar/api" target="_blank" rel="noreferrer">Google Calendar API</a></li>
     <li><a href="https://developer.safaricom.co.ke/" target="_blank" rel="noreferrer">Daraja 2.0 API</a></li>
-    <li><a href="https://developer.paypal.com/api/rest/" target="_blank" rel="noreferrer">Paypal API</a></li>
 </ol>
 
 # Deployment Link:
